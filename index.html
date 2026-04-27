@@ -250,6 +250,90 @@
     box-shadow: 0 0 0 0.5px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.15);
   }
 
+  /* Reference visuals grid */
+  .ref-grid {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--separator);
+  }
+  .ref-grid-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--tint);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .ref-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+  }
+  .ref-card {
+    display: block;
+    text-decoration: none;
+    border: 1px solid var(--separator);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .ref-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--elev-2);
+    border-color: var(--label-tertiary);
+  }
+  .ref-card-img {
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #F5F2E8 0%, #E8E5DC 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .ref-card-img::before {
+    content: '';
+    width: 32px;
+    height: 32px;
+    border: 1.5px dashed var(--label-tertiary);
+    border-radius: 6px;
+    opacity: 0.5;
+  }
+  .ref-card-img.tone-bobsnu { background: linear-gradient(135deg, #E8D9B0 0%, #C4983A 100%); }
+  .ref-card-img.tone-daoom { background: linear-gradient(135deg, #B8C2A8 0%, #5C6B4F 100%); }
+  .ref-card-img.tone-daehak { background: linear-gradient(135deg, #D4DDC2 0%, #A4B584 100%); }
+  .ref-card-img.tone-avo { background: linear-gradient(135deg, #B5C5B0 0%, #1E3A1A 100%); }
+  .ref-card-img.tone-pheeew { background: linear-gradient(135deg, #E8C0A8 0%, #8B4A2C 100%); }
+  .ref-card-img.tone-cream { background: linear-gradient(135deg, #FBF8E8 0%, #E8E0C8 100%); }
+  .ref-card-img.tone-mono { background: linear-gradient(135deg, #2C2C2E 0%, #1A1A1C 100%); }
+  .ref-card-img.tone-sage { background: linear-gradient(135deg, #C8D4C0 0%, #6B7A5E 100%); }
+  .ref-card-img.tone-mono::before, .ref-card-img.tone-avo::before, .ref-card-img.tone-pheeew::before { border-color: rgba(255,255,255,0.5); }
+  .ref-card-info {
+    padding: 8px 12px 10px;
+    background: var(--bg-secondary);
+  }
+  .ref-card-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--label-primary);
+    line-height: 1.3;
+    margin-bottom: 2px;
+  }
+  .ref-card-note {
+    font-size: 10px;
+    color: var(--label-secondary);
+    line-height: 1.4;
+  }
+  /* Allow user-supplied images to fill the slot */
+  .ref-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .ref-card-img:has(img)::before { display: none; }
+
   /* Bilingual toggle */
   .lang-ko { display: none; }
   body.lang-mode-ko .lang-en { display: none; }
@@ -1032,6 +1116,17 @@
               <dt>채널</dt><dd>홈쇼핑 1차 (탈모 케어 단일 약속). 자사몰 정기배송. 쿠팡 가격 ladder.</dd>
               <dt>차별점</dt><dd>Korean manufacturing partner + 서울대 이기원 교수 연구 + 약콩 헤리티지의 합. 단일 비타민이 아닌 inside+outside 통합.</dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://nutrafol.com/hair/men/product/core/men/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Nutrafol</div><div class="ref-card-note">Premium hair supplement · clinical positioning</div></div></a>
+                <a class="ref-card" href="https://www.skintruth.co.uk/" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Skintruth</div><div class="ref-card-note">Inside-out beauty · UK design edge</div></div></a>
+                <a class="ref-card" href="https://humanrace.com/" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Humanrace</div><div class="ref-card-note">Pharrell · clean clinical packaging</div></div></a>
+                <a class="ref-card" href="https://www.amazon.com/JSHealth-Vitamins-Turmeric-Supplement-Capsules/dp/B07J9KNS9G/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">JSHealth Vitamins</div><div class="ref-card-note">Founder-led wellness · Australia</div></div></a>
+                <a class="ref-card" href="https://www.equipfoods.com/products/grass-fed-collagen" target="_blank"><div class="ref-card-img tone-bobsnu"></div><div class="ref-card-info"><div class="ref-card-name">Equip Foods</div><div class="ref-card-note">Inner care · grass-fed positioning</div></div></a>
+                <a class="ref-card" href="https://ritual.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Ritual</div><div class="ref-card-note">Subscription model · transparency</div></div></a>
+              </div>
+            </div>
           </div>
 
           <div class="concept">
@@ -1048,6 +1143,18 @@
               <dt>채널</dt><dd>자사몰 정기배송 1차 (premium subscription LTV 확보). 홈쇼핑 (Phyto100 라인 확장). 쿠팡. 마켓컬리.</dd>
               <dt>차별점</dt><dd>한국에서 완전식 카테고리가 본격적으로 비어 있다. 약콩 phyto + 한국 슈퍼푸드 (검은참깨, 흑미, 약콩) + 단백질 + 그린스 통합. Huel/AG1이 가지지 못한 한국 phytochemical 헤리티지.</dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://uk.huel.com/" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Huel Black Edition</div><div class="ref-card-note">Premium complete meal · 40g protein · 27 vit/min</div></div></a>
+                <a class="ref-card" href="https://uk.huel.com/products/huel-essential" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Huel Essential</div><div class="ref-card-note">Value-tier sister SKU</div></div></a>
+                <a class="ref-card" href="https://drinkag1.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">AG1</div><div class="ref-card-note">$1.2B valuation · single-SKU greens</div></div></a>
+                <a class="ref-card" href="https://www.kachava.com/" target="_blank"><div class="ref-card-img tone-bobsnu"></div><div class="ref-card-info"><div class="ref-card-name">Ka'Chava</div><div class="ref-card-note">Plant superfood meal · subscription</div></div></a>
+                <a class="ref-card" href="https://im8health.com/products/essentials" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">IM8 Health</div><div class="ref-card-note">Premium daily essentials</div></div></a>
+                <a class="ref-card" href="https://www.bulk.com/uk/products/1-complete-food-shake/bpfs-one" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Bulk.com Complete</div><div class="ref-card-note">UK complete meal · sport-led</div></div></a>
+                <a class="ref-card" href="https://shop.truvani.com/pages/plant-based-protein" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Truvani</div><div class="ref-card-note">Clean plant protein · transparency</div></div></a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1076,6 +1183,17 @@
               <dt>채널</dt><dd>홈쇼핑 1차 (38년 가업 + 한국 최초 생식 스토리 강력). 마켓컬리. 자사몰 정기배송.</dd>
               <dt>차별점</dt><dd>한국 최초 생식 발명자가 만든 modern daily 생식. 미국 AG1이 흉내낼 수 없는 진짜 헤리티지. <strong>Daoom의 flagship 제품.</strong></dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://drinkag1.com/apac-us" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">AG1</div><div class="ref-card-note">Daily greens · single-SKU template</div></div></a>
+                <a class="ref-card" href="https://www.kachava.com/collections/shop-all" target="_blank"><div class="ref-card-img tone-bobsnu"></div><div class="ref-card-info"><div class="ref-card-name">Ka'Chava</div><div class="ref-card-note">Plant superfood · meal-replacement</div></div></a>
+                <a class="ref-card" href="https://drinksolo.co/products/solo-hybrid-all-in-one-performance-supplement" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Drink Solo Hybrid</div><div class="ref-card-note">All-in-one performance · single hero</div></div></a>
+                <a class="ref-card" href="https://www.instagram.com/sakaralife/" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Sakara Life</div><div class="ref-card-note">Premium wellness · editorial brand voice</div></div></a>
+                <a class="ref-card" href="https://promixnutrition.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Promix Nutrition</div><div class="ref-card-note">Clean protein · founder-led</div></div></a>
+                <a class="ref-card" href="https://shop.truvani.com/pages/plant-based-protein" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Truvani</div><div class="ref-card-note">Plant protein · transparency narrative</div></div></a>
+              </div>
+            </div>
           </div>
 
           <div class="concept">
@@ -1092,6 +1210,17 @@
               <dt>채널</dt><dd>마켓컬리 1차 (premium daily ritual). 자사몰. 편의점 (직장인 아침 / 점심).</dd>
               <dt>차별점</dt><dd>서양 meal-replacement이 아닌 "한국 생식의 마실 수 있는 진화." Concept 01 (스틱)과 sister product 관계, 가족 단위 / 다양한 ritual 커버.</dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://uk.huel.com/" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Huel RTD</div><div class="ref-card-note">Bottled meal · clinical-modern</div></div></a>
+                <a class="ref-card" href="https://drinktru.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Drink Tru</div><div class="ref-card-note">Functional bottled wellness</div></div></a>
+                <a class="ref-card" href="https://drinksolo.co/" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Drink Solo</div><div class="ref-card-note">All-in-one performance shake</div></div></a>
+                <a class="ref-card" href="https://www.plenishdrinks.com/" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Plenish</div><div class="ref-card-note">UK premium plant drinks</div></div></a>
+                <a class="ref-card" href="https://maeva.co/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Maeva</div><div class="ref-card-note">Daily ritual · feminine wellness</div></div></a>
+                <a class="ref-card" href="https://drinkhappyviking.com/products/complete-plant-superfood-nutrition" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Happy Viking</div><div class="ref-card-note">Plant-based complete nutrition</div></div></a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1120,6 +1249,19 @@
               <dt>채널</dt><dd>편의점 1차 (MZ 카페 대체 음료). 마켓컬리 (premium flavored line). 쿠팡. 카페 컬래버 가능 (B2B Barista 라인과 연동).</dd>
               <dt>차별점</dt><dd>매일유업/정식품 (mass commodity, 단순 두유) 대비 카페 등급 flavor 라인. Oatly가 가지지 못한 한국 농가 stake + 평창 origin. 카페 음료 occasion을 retail로 가져오는 SKU.</dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://uchimatcha.com/" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Uchi Matcha</div><div class="ref-card-note">Premium matcha latte · LA-based</div></div></a>
+                <a class="ref-card" href="https://tsukimatcha.com/en" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Tsuki Matcha</div><div class="ref-card-note">Japanese matcha · minimalist branding</div></div></a>
+                <a class="ref-card" href="https://www.newmixcoffee.com/shop/detail_matcha-latte" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Newmix Matcha Latte</div><div class="ref-card-note">Korean matcha latte RTD</div></div></a>
+                <a class="ref-card" href="https://www.plenishdrinks.com/" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Plenish</div><div class="ref-card-note">UK premium plant drinks · variety line</div></div></a>
+                <a class="ref-card" href="https://www.instagram.com/californianaturals/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Califia Farms</div><div class="ref-card-note">Mocha · vanilla · cold brew variants</div></div></a>
+                <a class="ref-card" href="https://drinkeub.com/" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Drink EUB</div><div class="ref-card-note">Premium functional bottled drink</div></div></a>
+                <a class="ref-card" href="https://www.drinkmiils.com/products/meteorite-chocolate-crunch" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Drink Miils</div><div class="ref-card-note">Modern milk · flavor-forward</div></div></a>
+                <a class="ref-card" href="https://beauty-nj.com/products/esthe-pro-labo-protein-natura-gran-pro-matcha" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Esthe Pro Labo Matcha</div><div class="ref-card-note">Japanese protein matcha · beauty crossover</div></div></a>
+              </div>
+            </div>
           </div>
 
           <div class="concept">
@@ -1136,6 +1278,16 @@
               <dt>채널</dt><dd>B2B 스페셜티 카페 입점 1차 (블루보틀 + 펠트 + 개인 로스터리). 마켓컬리. 자사몰. B2B 인지도가 retail 견인.</dd>
               <dt>차별점</dt><dd>Oatly가 갖지 못한 한국 농가 stake holding + 평창 origin story. 매일유업 두유보다 분명한 specialty premium positioning.</dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://www.instagram.com/the_skindeep/reels/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Oatly Barista Edition</div><div class="ref-card-note">Plant-milk barista pioneer · café flywheel</div></div></a>
+                <a class="ref-card" href="https://www.instagram.com/californianaturals/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Califia Farms Barista</div><div class="ref-card-note">B2B + B2C dual line</div></div></a>
+                <a class="ref-card" href="https://www.bluebottlecoffee.com/us/eng" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Blue Bottle</div><div class="ref-card-note">Premium specialty café reference</div></div></a>
+                <a class="ref-card" href="https://www.the-matcha.tokyo/pages/ourmatcha" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">The Matcha Tokyo</div><div class="ref-card-note">Specialty café-grade visual language</div></div></a>
+                <a class="ref-card" href="https://www.thegrowthelements.com/p/blank-street-coffee-growth-case-study" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Blank Street Coffee</div><div class="ref-card-note">Café category disruption · case study</div></div></a>
+              </div>
+            </div>
           </div>
 
           <div class="concept">
@@ -1152,6 +1304,17 @@
               <dt>채널</dt><dd>마켓컬리 (premium variety). 쿠팡. 편의점 (single-serve flavor variants).</dd>
               <dt>차별점</dt><dd>매일유업 flavored 두유 (mass commodity) 대비 premium positioning + 농가 owned story + 한국 헤리티지 곡물. 두유 코어를 떠나지 않으면서 SKU 다양화.</dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://honeydepartment.org/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Honey Department</div><div class="ref-card-note">Korean heritage food · premium packaging</div></div></a>
+                <a class="ref-card" href="https://www.aurg.kr/info" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Aurg</div><div class="ref-card-note">Korean wellness · heritage-modern bridge</div></div></a>
+                <a class="ref-card" href="https://medisonbell.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Medison Bell</div><div class="ref-card-note">Korean drinkable wellness · heritage angle</div></div></a>
+                <a class="ref-card" href="https://hormbles.com/" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Hormbles</div><div class="ref-card-note">Korean wellness · clean modern brand</div></div></a>
+                <a class="ref-card" href="https://www.coupang.com/vp/products/8894013137" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">쌍쌍화차</div><div class="ref-card-note">Heritage 한방차 modern reframe</div></div></a>
+                <a class="ref-card" href="https://www.instagram.com/sincerelyyours/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Sincerely Yours</div><div class="ref-card-note">Heritage food brand voice</div></div></a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1180,6 +1343,20 @@
               <dt>채널</dt><dd>편의점 (CU, GS25, 7-Eleven 입점). 마켓컬리. 자사몰. 미국 진출 후 Whole Foods, Erewhon 가능.</dd>
               <dt>차별점</dt><dd>미국 wellness shot이 갖지 못한 한국 한방 정통성. AVO 헤리티지가 Magic Mind에 없는 깊이를 준다.</dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://magicmind.com/" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Magic Mind</div><div class="ref-card-note">Mental clarity shot · category leader</div></div></a>
+                <a class="ref-card" href="https://viveorganic.com/pages/our-story" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Vive Organic</div><div class="ref-card-note">Daily wellness shot · clean ingredients</div></div></a>
+                <a class="ref-card" href="https://sogoodsoyou.com/collections/all-products/products/detox-coconut-lime" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">So Good So You</div><div class="ref-card-note">Wellness shot · convenience-store ready</div></div></a>
+                <a class="ref-card" href="https://brocshot.com/" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Brocshot</div><div class="ref-card-note">Single-hero shot · broccoli sprout</div></div></a>
+                <a class="ref-card" href="https://crushedtonic.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Crushed Tonic</div><div class="ref-card-note">Adaptogen tonic · daily ritual</div></div></a>
+                <a class="ref-card" href="https://drinktru.com/collections/shots/products/tru-dream-shots" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Tru Dream Shots</div><div class="ref-card-note">Sleep / dream shot · premium glass</div></div></a>
+                <a class="ref-card" href="https://dosedaily.co/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Dose Daily</div><div class="ref-card-note">Liver / wellness daily shot · Korean</div></div></a>
+                <a class="ref-card" href="https://www.plenishdrinks.com/products/ginger-energy-dosing-bottle-pack-4-x-420ml" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Plenish Ginger</div><div class="ref-card-note">Ginger energy dosing · UK premium</div></div></a>
+                <a class="ref-card" href="https://justaddbuoy.com/products/hydration-drops" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Buoy</div><div class="ref-card-note">Hydration drops · minimalist design</div></div></a>
+              </div>
+            </div>
           </div>
 
           <div class="concept">
@@ -1196,6 +1373,20 @@
               <dt>채널</dt><dd>마켓컬리. 편의점 (premium MZ shelf). 자사몰. 카페 컬래버 가능.</dd>
               <dt>차별점</dt><dd>일반 functional drink (Recess copycat) 대비 한국 한방 헤리티지 + AVO 모던 정체성. Wellness shot (Concept 01)보다 daily, sustained ritual.</dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://usecadence.com/" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Cadence</div><div class="ref-card-note">Daily ritual · minimalist can</div></div></a>
+                <a class="ref-card" href="https://rebbl.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">REBBL</div><div class="ref-card-note">Functional adaptogen drink · global flavors</div></div></a>
+                <a class="ref-card" href="https://drinktru.com/" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Drink Tru</div><div class="ref-card-note">Bottled functional · modern minimal</div></div></a>
+                <a class="ref-card" href="https://www.drinkliquidplus.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Liquid Plus</div><div class="ref-card-note">Functional bottled drink · launch story</div></div></a>
+                <a class="ref-card" href="https://maeva.co/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Maeva</div><div class="ref-card-note">Daily wellness ritual drink · feminine voice</div></div></a>
+                <a class="ref-card" href="https://drinkunwell.com/" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Unwell</div><div class="ref-card-note">Calm functional drink · adaptogen</div></div></a>
+                <a class="ref-card" href="https://drinksuperoot.com/pages/ingredients" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Superoot</div><div class="ref-card-note">Adaptogenic root drink · natural design</div></div></a>
+                <a class="ref-card" href="https://gngrlabs.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">GNGR Labs</div><div class="ref-card-note">Single-hero ginger functional</div></div></a>
+                <a class="ref-card" href="https://www.morelabs.com/products/morning-recovery" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">More Labs Morning Recovery</div><div class="ref-card-note">Functional drink · daily occasion design</div></div></a>
+              </div>
+            </div>
           </div>
 
           <div class="concept">
@@ -1212,6 +1403,20 @@
               <dt>채널</dt><dd>자사몰 only (premium positioning 보호). 마켓컬리. 약사 추천 채널.</dd>
               <dt>차별점</dt><dd>한국 자체 R&D 리포소말 + 다움 헤리티지 = Cymbiotika가 갖지 못한 동양 의학 기반 premium science. 다른 AVO concept이 brand authority 만든 후 launch.</dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://cymbiotika.com/" target="_blank"><div class="ref-card-img tone-avo"></div><div class="ref-card-info"><div class="ref-card-name">Cymbiotika</div><div class="ref-card-note">Premium liposomal · category leader</div></div></a>
+                <a class="ref-card" href="https://www.quicksilverscientific.com/products/nad-platinum-r" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Quicksilver Scientific</div><div class="ref-card-note">Clinical liposomal · educational marketing</div></div></a>
+                <a class="ref-card" href="https://www.amazon.com/Codeage-Liposomal-Ultra-Supplement-Methylcobalamin/dp/B0C4W74Z5N" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Codeage Liposomal</div><div class="ref-card-note">Liposomal multi-line · Amazon native</div></div></a>
+                <a class="ref-card" href="https://www.vitalproteins.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Vital Proteins</div><div class="ref-card-note">Premium collagen · Nestlé acquired</div></div></a>
+                <a class="ref-card" href="https://novoslabs.com/" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Novos Labs</div><div class="ref-card-note">Longevity supplement · scientific authority</div></div></a>
+                <a class="ref-card" href="https://www.elysiumhealth.com/" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Elysium Health</div><div class="ref-card-note">Premium NAD+ · clinical positioning</div></div></a>
+                <a class="ref-card" href="https://www.truniagen.com/collections/foundational/products/tru-niagen-300mg" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Tru Niagen</div><div class="ref-card-note">NAD+ precursor · clinical design</div></div></a>
+                <a class="ref-card" href="https://ritual.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Ritual</div><div class="ref-card-note">Transparency-led premium supplement</div></div></a>
+                <a class="ref-card" href="https://www.timeline.com/shop/new" target="_blank"><div class="ref-card-img tone-mono"></div><div class="ref-card-info"><div class="ref-card-name">Timeline</div><div class="ref-card-note">Mitopure · cellular health · premium</div></div></a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1240,6 +1445,19 @@
               <dt>채널</dt><dd>편의점 1차 (CU, GS25 입점). 쿠팡. 마켓컬리. TikTok Shop Korea.</dd>
               <dt>차별점</dt><dd>Olipop은 fiber만 강조. Pheeew는 신바이오틱 (prebiotic + probiotic) full stack. 한국 fruit base.</dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://goodbelly.com/" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">GoodBelly</div><div class="ref-card-note">Probiotic functional drink · gut focus</div></div></a>
+                <a class="ref-card" href="https://www.instagram.com/1987juices/" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">1987 Juices</div><div class="ref-card-note">Modern juice brand · vibrant design</div></div></a>
+                <a class="ref-card" href="https://www.drinkpouch.com/products/hydration" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">Drink Pouch</div><div class="ref-card-note">Pouch-format functional drink</div></div></a>
+                <a class="ref-card" href="https://drinkhappyviking.com/" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Happy Viking</div><div class="ref-card-note">Plant-based functional · bold can design</div></div></a>
+                <a class="ref-card" href="https://www.instagram.com/healthade/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Health-Ade</div><div class="ref-card-note">Premium kombucha · gut category</div></div></a>
+                <a class="ref-card" href="https://drinkliquidplus.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Liquid Plus</div><div class="ref-card-note">Functional bottled drink · modern launch</div></div></a>
+                <a class="ref-card" href="https://www.instagram.com/caliwater/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Caliwater</div><div class="ref-card-note">Cactus water · clean visual identity</div></div></a>
+                <a class="ref-card" href="https://itsgoodbacteria.com/" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">Good Bacteria</div><div class="ref-card-note">Bacterial wellness · playful brand voice</div></div></a>
+              </div>
+            </div>
           </div>
 
           <div class="concept">
@@ -1256,6 +1474,19 @@
               <dt>채널</dt><dd>쿠팡 정기배송. TikTok Shop Korea. 자사몰. 편의점 (single-serve test).</dd>
               <dt>차별점</dt><dd>Bloom의 분말 그린스가 신바이오틱 부재. Pheeew는 신바이오틱이 hero. 락토핏보다 premium synbiotic stack.</dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://drinkag1.com/apac-us" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">AG1</div><div class="ref-card-note">Daily greens · stick / single-serve format</div></div></a>
+                <a class="ref-card" href="https://seed.com/daily-synbiotic" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Seed Daily Synbiotic</div><div class="ref-card-note">Premium synbiotic · cult following</div></div></a>
+                <a class="ref-card" href="https://ritual.com/products/synbiotic-plus-for-gut-health" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Ritual Synbiotic+</div><div class="ref-card-note">Synbiotic capsule · transparency story</div></div></a>
+                <a class="ref-card" href="https://eatbuffs.co/" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">Buffs</div><div class="ref-card-note">Functional snack · MZ-friendly format</div></div></a>
+                <a class="ref-card" href="https://loamscience.com/products/loam-prebiotic-fiber-formula" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Loam Science</div><div class="ref-card-note">Prebiotic fiber · clinical brand voice</div></div></a>
+                <a class="ref-card" href="https://www.trelli.health/" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">Trelli Health</div><div class="ref-card-note">Functional gut wellness · modern direct</div></div></a>
+                <a class="ref-card" href="https://supergut.com/" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">Supergut</div><div class="ref-card-note">Resistant starch · GLP-1 adjacent</div></div></a>
+                <a class="ref-card" href="https://zoe.com/en-gb/daily30" target="_blank"><div class="ref-card-img tone-sage"></div><div class="ref-card-info"><div class="ref-card-name">ZOE Daily30+</div><div class="ref-card-note">Plant-diversity stick · science-led</div></div></a>
+              </div>
+            </div>
           </div>
 
           <div class="concept">
@@ -1272,6 +1503,19 @@
               <dt>채널</dt><dd>편의점. 쿠팡. 마켓컬리. 자사몰.</dd>
               <dt>차별점</dt><dd>기존 한국 gummy brand (Cosmoman, Vitafusion 수입)이 갖지 못한 brand voice + 신바이오틱 친화 brand association.</dd>
             </dl>
+            <div class="ref-grid">
+              <div class="ref-grid-title">Reference Visuals · 시각 레퍼런스</div>
+              <div class="ref-cards">
+                <a class="ref-card" href="https://shop.lemmelive.com/lemme-kourtney-storytelling/" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">Lemme</div><div class="ref-card-note">Functional gummy · Kourtney Kardashian</div></div></a>
+                <a class="ref-card" href="https://www.amazon.com/Lemme-Digestive-Probiotics-Prebiotic-Regularity/dp/B0BHJ55LNQ/" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">Lemme Debloat</div><div class="ref-card-note">Condition-specific gummy · viral angle</div></div></a>
+                <a class="ref-card" href="https://www.instagram.com/finalbosssour/" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">Final Boss Sour</div><div class="ref-card-note">Sour gummy · brand voice + design edge</div></div></a>
+                <a class="ref-card" href="https://www.instagram.com/eatbettersour" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">Eat Better Sour</div><div class="ref-card-note">Functional sour candy · MZ-targeted</div></div></a>
+                <a class="ref-card" href="https://www.instagram.com/badmouthcandy/" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">Bad Mouth Candy</div><div class="ref-card-note">Cult candy brand · irreverent voice</div></div></a>
+                <a class="ref-card" href="https://katjes.us/" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">Katjes</div><div class="ref-card-note">German plant-based gummy · clean design</div></div></a>
+                <a class="ref-card" href="https://lovely-bunch.com/" target="_blank"><div class="ref-card-img tone-pheeew"></div><div class="ref-card-info"><div class="ref-card-name">Lovely Bunch</div><div class="ref-card-note">Modern functional gummy</div></div></a>
+                <a class="ref-card" href="https://getmiggy.com/" target="_blank"><div class="ref-card-img tone-cream"></div><div class="ref-card-info"><div class="ref-card-name">Miggy</div><div class="ref-card-note">Functional candy · elegant brand identity</div></div></a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
