@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVO · Product Concept Pipeline</title>
+<style>
+  /* ============================================
+     macOS Sequoia Design System
+     ============================================ */
+  :root {
+    /* Apple system colors (light mode) */
+    --bg-primary: #F2F2F7;
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #F9F9FB;
+    --bg-grouped: #F2F2F7;
+    --bg-vibrancy: rgba(246, 246, 248, 0.72);
+
+    --label-primary: rgba(0, 0, 0, 0.85);
+    --label-secondary: rgba(60, 60, 67, 0.6);
+    --label-tertiary: rgba(60, 60, 67, 0.3);
+    --label-quaternary: rgba(60, 60, 67, 0.18);
+
+    --separator: rgba(60, 60, 67, 0.12);
+    --separator-strong: rgba(60, 60, 67, 0.2);
+
+    --tint: #1E3A1A;
+    --tint-soft: rgba(30, 58, 26, 0.08);
+    --tint-hover: rgba(30, 58, 26, 0.14);
+
+    --system-blue: #007AFF;
+    --system-green: #34C759;
+    --system-red: #FF3B30;
+    --system-yellow: #FFCC00;
+    --system-orange: #FF9500;
+    --system-purple: #AF52DE;
+
+    --traffic-red: #FF5F56;
+    --traffic-yellow: #FFBD2E;
+    --traffic-green: #27C93F;
+    --traffic-stroke: rgba(0,0,0,0.07);
+
+    /* Brand accents */
+    --brand-bobsnu: #C4983A;
+    --brand-daoom: #5C6B4F;
+    --brand-daehak: #A4B584;
+    --brand-avo: #1E3A1A;
+    --brand-pheeew: #8B4A2C;
+    --brand-so: #6B4E7D;
+
+    /* Elevations */
+    --elev-1: 0 0 0 0.5px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --elev-2: 0 0 0 0.5px rgba(0,0,0,0.06), 0 4px 14px rgba(0,0,0,0.06);
+    --elev-window: 0 12px 60px rgba(0,0,0,0.18), 0 0 0 0.5px rgba(0,0,0,0.1);
+
+    /* Radii */
+    --r-button: 6px;
+    --r-card: 10px;
+    --r-card-large: 14px;
+    --r-window: 12px;
+    --r-pill: 100px;
+
+    /* Type */
+    --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-system);
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--label-primary);
+    background: linear-gradient(180deg, #B5B5C0 0%, #8E8E96 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    height: 100vh;
+    padding: 24px;
+    overflow: hidden;
+  }
+
+  /* ============================================
+     App window
+     ============================================ */
+  .app-window {
+    max-width: 1240px;
+    margin: 0 auto;
+    background: var(--bg-secondary);
+    border-radius: var(--r-window);
+    box-shadow: var(--elev-window);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ============================================
+     Title bar (with traffic lights)
+     ============================================ */
+  .window-titlebar {
+    display: flex;
+    align-items: center;
+    height: 38px;
+    padding: 0 16px;
+    background: var(--bg-vibrancy);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--separator);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .traffic-lights {
+    display: flex;
+    gap: 8px;
+    z-index: 2;
+  }
+  .tl-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 0.5px var(--traffic-stroke);
+    cursor: default;
+    transition: filter 0.15s ease;
+  }
+  .tl-dot.tl-close { background: var(--traffic-red); }
+  .tl-dot.tl-min { background: var(--traffic-yellow); }
+  .tl-dot.tl-max { background: var(--traffic-green); }
+  .traffic-lights:hover .tl-dot { filter: brightness(0.95); }
+  .window-title {
+    position: absolute;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--label-primary);
+    letter-spacing: -0.01em;
+    pointer-events: none;
+  }
+
+  /* ============================================
+     Toolbar
+     ============================================ */
+  .window-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 16px;
+    background: var(--bg-vibrancy);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--separator);
+    flex-shrink: 0;
+  }
+  .tb-button {
+    width: 28px;
+    height: 22px;
+    background: rgba(0,0,0,0.04);
+    border: none;
+    border-radius: var(--r-button);
+    color: var(--label-secondary);
+    font-size: 13px;
+    cursor: default;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-system);
+  }
+  .tb-button:hover { background: rgba(0,0,0,0.07); }
+  .tb-search {
+    flex: 0 1 320px;
+    margin: 0 auto;
+    height: 24px;
+    background: rgba(0,0,0,0.06);
+    border-radius: var(--r-button);
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    gap: 6px;
+    color: var(--label-secondary);
+    font-size: 12px;
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+  }
+  .tb-search:focus-within {
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 0 0 3px rgba(30,58,26,0.2), inset 0 0 0 0.5px rgba(0,0,0,0.1);
+  }
+  .tb-search-icon {
+    font-size: 12px;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+  .tb-search input {
+    background: transparent;
+    border: none;
+    outline: none;
+    flex: 1;
+    min-width: 0;
+    font-family: var(--font-system);
+    font-size: 12px;
+    color: var(--label-primary);
+    padding: 0;
+  }
+  .tb-search input::placeholder {
+    color: var(--label-secondary);
+  }
+  .tb-search-count {
+    font-size: 11px;
+    color: var(--label-secondary);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+  .tb-search-nav {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+  .tb-search-nav button {
+    width: 16px;
+    height: 16px;
+    border: none;
+    background: transparent;
+    color: var(--label-secondary);
+    font-size: 11px;
+    cursor: default;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .tb-search-nav button:hover { background: rgba(0,0,0,0.07); color: var(--label-primary); }
+  .tb-spacer { flex: 1; }
+
+  mark.search-highlight {
+    background: rgba(255, 204, 0, 0.45);
+    color: var(--label-primary);
+    padding: 1px 2px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 0.5px rgba(0,0,0,0.05);
+    transition: background 0.15s ease;
+  }
+  mark.search-highlight.current {
+    background: var(--system-orange);
+    color: white;
+    box-shadow: 0 0 0 0.5px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.15);
+  }
+
+  /* ============================================
+     Split view
+     ============================================ */
+  .split-view {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* ============================================
+     Sidebar
+     ============================================ */
+  .sidebar {
+    background: var(--bg-vibrancy);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-right: 1px solid var(--separator);
+    padding: 14px 12px;
+    overflow-y: auto;
+    height: 100%;
+  }
+  .sidebar-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--label-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 14px 10px 6px;
+  }
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px;
+    border-radius: var(--r-button);
+    color: var(--label-primary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.1s ease;
+  }
+  .sidebar-item:hover {
+    background: rgba(0,0,0,0.05);
+  }
+  .sidebar-item.active {
+    background: var(--tint);
+    color: white;
+  }
+  .sidebar-item-num {
+    font-size: 11px;
+    color: var(--label-tertiary);
+    font-variant-numeric: tabular-nums;
+    margin-left: auto;
+  }
+  .sidebar-item.active .sidebar-item-num { color: rgba(255,255,255,0.6); }
+  .sidebar-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--label-secondary);
+    flex-shrink: 0;
+  }
+  .sidebar-item.active .sidebar-icon { color: white; }
+  .brand-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-left: 3px;
+    margin-right: 3px;
+    box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.15);
+  }
+  .brand-dot.bobsnu { background: var(--brand-bobsnu); }
+  .brand-dot.daoom { background: var(--brand-daoom); }
+  .brand-dot.daehak { background: var(--brand-daehak); }
+  .brand-dot.avo { background: var(--brand-avo); }
+  .brand-dot.pheeew { background: var(--brand-pheeew); }
+  .brand-dot.so { background: var(--brand-so); }
+
+  /* ============================================
+     Content area
+     ============================================ */
+  .content {
+    background: var(--bg-grouped);
+    overflow-y: auto;
+    height: 100%;
+    padding: 32px 48px 64px;
+    scroll-behavior: smooth;
+  }
+
+  /* ============================================
+     Document header
+     ============================================ */
+  .doc-header {
+    margin-bottom: 32px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--separator);
+  }
+  .doc-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--tint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+  .doc-header h1 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--label-primary);
+    margin-bottom: 6px;
+  }
+  .doc-subtitle {
+    font-size: 16px;
+    color: var(--label-secondary);
+    font-weight: 400;
+    margin-bottom: 18px;
+  }
+  .doc-lede {
+    font-size: 14px;
+    color: var(--label-primary);
+    line-height: 1.55;
+    margin-bottom: 12px;
+    max-width: 720px;
+  }
+  .doc-meta {
+    display: flex;
+    gap: 14px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .doc-meta-item {
+    font-size: 11px;
+    color: var(--label-secondary);
+    background: rgba(0,0,0,0.04);
+    padding: 4px 10px;
+    border-radius: var(--r-pill);
+    font-weight: 500;
+  }
+  .doc-meta-item strong { color: var(--label-primary); font-weight: 600; }
+
+  /* ============================================
+     Section (card group, like Settings)
+     ============================================ */
+  .section {
+    margin-bottom: 36px;
+  }
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--label-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0 12px;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .section-eyebrow .num {
+    color: var(--tint);
+  }
+  .section-eyebrow .ko {
+    color: var(--label-tertiary);
+    font-weight: 500;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--label-primary);
+    margin: 0 0 14px;
+    padding: 0 12px;
+  }
+  .section > p:not(.card p) {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--label-primary);
+    margin-bottom: 12px;
+    padding: 0 12px;
+    max-width: 760px;
+  }
+
+  /* ============================================
+     Cards (Settings-app inset cards)
+     ============================================ */
+  .card {
+    background: var(--bg-secondary);
+    border-radius: var(--r-card);
+    box-shadow: var(--elev-1);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .card-content {
+    padding: 16px 18px;
+  }
+  .card-content p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--label-primary);
+    margin-bottom: 12px;
+  }
+  .card-content p:last-child { margin-bottom: 0; }
+  .card-content h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    color: var(--label-primary);
+  }
+  .card-content h3:first-child { margin-top: 0; }
+  .card-content ul, .card-content ol {
+    margin: 0 0 14px 22px;
+    font-size: 14px;
+    color: var(--label-primary);
+  }
+  .card-content li { margin-bottom: 4px; }
+  .card-content strong { font-weight: 600; }
+  .card-content a {
+    color: var(--system-blue);
+    text-decoration: none;
+  }
+  .card-content a:hover { text-decoration: underline; }
+
+  .card-divider {
+    height: 1px;
+    background: var(--separator);
+    margin: 0 16px;
+  }
+
+  /* Callout card */
+  .callout-card {
+    background: var(--tint-soft);
+    border: 0.5px solid var(--tint-hover);
+    box-shadow: none;
+  }
+  .callout-card .card-content {
+    padding: 14px 18px;
+  }
+  .callout-card .callout-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--tint);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  .callout-card p {
+    font-size: 13px;
+    color: var(--label-primary);
+    margin-bottom: 8px;
+  }
+  .callout-card .ko-line {
+    display: block;
+    font-size: 12px;
+    color: var(--label-secondary);
+    line-height: 1.5;
+    padding-top: 8px;
+    border-top: 0.5px solid var(--tint-hover);
+    margin-top: 8px;
+  }
+
+  /* ============================================
+     Brand block
+     ============================================ */
+  .brand-block {
+    margin-bottom: 36px;
+  }
+  .brand-card {
+    background: var(--bg-secondary);
+    border-radius: var(--r-card-large);
+    box-shadow: var(--elev-2);
+    overflow: hidden;
+    margin-bottom: 16px;
+    border-top: 3px solid var(--tint);
+  }
+  .brand-card.bobsnu { border-top-color: var(--brand-bobsnu); }
+  .brand-card.daoom { border-top-color: var(--brand-daoom); }
+  .brand-card.daehak { border-top-color: var(--brand-daehak); }
+  .brand-card.avo { border-top-color: var(--brand-avo); }
+  .brand-card.pheeew { border-top-color: var(--brand-pheeew); }
+  .brand-card.so { border-top-color: var(--brand-so); }
+  .brand-card-header {
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--separator);
+  }
+  .brand-card-header h2 {
+    padding: 0;
+    margin-bottom: 4px;
+    font-size: 20px;
+  }
+  .brand-card-header .brand-tag {
+    font-size: 12px;
+    color: var(--label-secondary);
+    line-height: 1.5;
+  }
+  .brand-card-summary {
+    padding: 14px 22px;
+    font-size: 13px;
+    color: var(--label-primary);
+    line-height: 1.55;
+    border-bottom: 1px solid var(--separator);
+  }
+  .brand-card-summary:last-child { border-bottom: none; }
+  .brand-card-tier-header {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--label-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 14px 22px 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-card-tier-blurb {
+    font-size: 13px;
+    color: var(--label-secondary);
+    padding: 0 22px 12px;
+    line-height: 1.5;
+  }
+
+  /* ============================================
+     Concept block (preference row style)
+     ============================================ */
+  .concept {
+    padding: 18px 22px;
+    border-top: 1px solid var(--separator);
+  }
+  .concept:first-child { border-top: none; }
+  .concept-header {
+    margin-bottom: 12px;
+  }
+  .concept-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--tint);
+    background: var(--tint-soft);
+    padding: 3px 8px;
+    border-radius: var(--r-button);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  .concept h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--label-primary);
+    margin-bottom: 3px;
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+  }
+  .concept .ko-name {
+    font-size: 12px;
+    color: var(--label-secondary);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .concept-frame {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 6px 14px;
+    font-size: 13px;
+  }
+  .concept-frame dt {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--tint);
+    letter-spacing: 0.02em;
+    padding-top: 1px;
+    text-transform: uppercase;
+  }
+  .concept-frame dd {
+    color: var(--label-primary);
+    line-height: 1.55;
+    margin-bottom: 0;
+  }
+  .concept-frame dd strong { font-weight: 600; }
+
+  /* ============================================
+     Tables (macOS list view style)
+     ============================================ */
+  .table-card {
+    background: var(--bg-secondary);
+    border-radius: var(--r-card);
+    box-shadow: var(--elev-1);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    background: var(--bg-tertiary);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--label-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--separator);
+  }
+  tbody td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--separator);
+    color: var(--label-primary);
+    line-height: 1.5;
+    vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td strong { font-weight: 600; }
+
+  /* ============================================
+     Code-style tag
+     ============================================ */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--label-secondary);
+    background: rgba(0,0,0,0.04);
+    padding: 2px 8px;
+    border-radius: var(--r-pill);
+  }
+
+  /* ============================================
+     Sequencing tier blocks
+     ============================================ */
+  .tier-block {
+    background: var(--bg-secondary);
+    border-radius: var(--r-card);
+    box-shadow: var(--elev-1);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .tier-header {
+    padding: 12px 18px;
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--separator);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .tier-header .tier-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--tint);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .tier-header .tier-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--label-primary);
+  }
+  .tier-content {
+    padding: 14px 18px;
+  }
+  .tier-content p {
+    font-size: 14px;
+    margin-bottom: 12px;
+    line-height: 1.55;
+  }
+  .tier-content p:last-child { margin-bottom: 0; }
+  .tier-content p strong { font-weight: 600; color: var(--label-primary); }
+
+  /* ============================================
+     Footer
+     ============================================ */
+  .doc-footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--separator);
+    color: var(--label-secondary);
+    font-size: 11px;
+    text-align: center;
+  }
+  .doc-footer p { margin: 0 0 3px; }
+
+  /* ============================================
+     Responsive
+     ============================================ */
+  @media (max-width: 900px) {
+    body { padding: 0; height: 100vh; overflow: hidden; }
+    .app-window { border-radius: 0; height: 100vh; box-shadow: none; }
+    .split-view { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+    .sidebar {
+      max-height: 220px;
+      border-right: none;
+      border-bottom: 1px solid var(--separator);
+    }
+    .content { padding: 24px 18px 56px; }
+    .doc-header h1 { font-size: 24px; }
+    .concept-frame { grid-template-columns: 1fr; gap: 2px; }
+    .concept-frame dt { padding-top: 8px; }
+  }
+
+  @media (max-width: 600px) {
+    .window-toolbar { padding: 0 12px; }
+    .tb-search { flex: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-window">
+
+  <!-- =========== Title bar with traffic lights =========== -->
+  <header class="window-titlebar">
+    <div class="traffic-lights">
+      <span class="tl-dot tl-close"></span>
+      <span class="tl-dot tl-min"></span>
+      <span class="tl-dot tl-max"></span>
+    </div>
+    <div class="window-title">AVO · Product Concept Pipeline</div>
+  </header>
+
+  <!-- =========== Toolbar =========== -->
+  <div class="window-toolbar">
+    <button class="tb-button" aria-label="Back">‹</button>
+    <button class="tb-button" aria-label="Forward">›</button>
+    <div class="tb-spacer"></div>
+    <div class="tb-search">
+      <span class="tb-search-icon">⌕</span>
+      <input id="searchInput" type="text" placeholder="Search Document" autocomplete="off" spellcheck="false" />
+      <span class="tb-search-count" id="searchCount"></span>
+      <div class="tb-search-nav" id="searchNav" style="display:none">
+        <button id="searchPrev" title="Previous match (Shift+Enter)">‹</button>
+        <button id="searchNext" title="Next match (Enter)">›</button>
+      </div>
+    </div>
+    <div class="tb-spacer"></div>
+    <button class="tb-button" aria-label="Share">⬆</button>
+    <button class="tb-button" aria-label="View">⊞</button>
+  </div>
+
+  <!-- =========== Split view =========== -->
+  <div class="split-view">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-section-label">Document</div>
+      <nav class="sidebar-nav">
+        <a href="#mandate" class="sidebar-item"><span class="sidebar-icon">◯</span><span>Mandate</span><span class="sidebar-item-num">01</span></a>
+        <a href="#frame" class="sidebar-item"><span class="sidebar-icon">◇</span><span>Strategic Frame</span><span class="sidebar-item-num">02</span></a>
+        <a href="#market" class="sidebar-item"><span class="sidebar-icon">◫</span><span>Korean Market</span><span class="sidebar-item-num">03</span></a>
+        <a href="#trends" class="sidebar-item"><span class="sidebar-icon">↗</span><span>US Trends</span><span class="sidebar-item-num">04</span></a>
+        <a href="#portfolio" class="sidebar-item"><span class="sidebar-icon">▤</span><span>Portfolio</span><span class="sidebar-item-num">05</span></a>
+      </nav>
+
+      <div class="sidebar-section-label">Brands</div>
+      <nav class="sidebar-nav">
+        <a href="#bobsnu" class="sidebar-item"><span class="brand-dot bobsnu"></span><span>Bobsnu</span></a>
+        <a href="#daoom" class="sidebar-item"><span class="brand-dot daoom"></span><span>Daoom · 다움</span></a>
+        <a href="#daehak" class="sidebar-item"><span class="brand-dot daehak"></span><span>대학두유</span></a>
+        <a href="#avo" class="sidebar-item"><span class="brand-dot avo"></span><span>AVO</span></a>
+        <a href="#pheeew" class="sidebar-item"><span class="brand-dot pheeew"></span><span>Pheeew</span></a>
+        <a href="#so" class="sidebar-item"><span class="brand-dot so"></span><span>Sensitive Ones</span></a>
+      </nav>
+
+      <div class="sidebar-section-label">Closing</div>
+      <nav class="sidebar-nav">
+        <a href="#sequencing" class="sidebar-item"><span class="sidebar-icon">≡</span><span>Sequencing</span><span class="sidebar-item-num">07</span></a>
+        <a href="#sources" class="sidebar-item"><span class="sidebar-icon">𝓲</span><span>Sources</span><span class="sidebar-item-num">08</span></a>
+      </nav>
+    </aside>
+
+    <!-- Content -->
+    <main class="content">
+
+      <!-- Document header -->
+      <header class="doc-header">
+        <div class="doc-eyebrow">All Vital Organics · Strategic Document</div>
+        <h1>Product Concept Pipeline</h1>
+        <p class="doc-subtitle">6개 브랜드 · 미국-한국 제품 컨셉 변환 프레임워크</p>
+        <p class="doc-lede">This document maps a sustainable product launch pipeline across the six brands AVO operates or partners on, using a US-to-Korea translation frame to identify what comes next, and where each concept fits.</p>
+        <p class="doc-lede">Each brand below has its own identity, audience, and natural product range. The document organizes the thinking behind what each brand can carry next, with research-backed market context for every concept.</p>
+        <div class="doc-meta">
+          <div class="doc-meta-item"><strong>Publisher</strong> All Vital Organics</div>
+          <div class="doc-meta-item"><strong>Author</strong> Alex Kim · 김승준</div>
+          <div class="doc-meta-item"><strong>Date</strong> April 27, 2026</div>
+          <div class="doc-meta-item"><strong>Version</strong> 2.1 · Public</div>
+        </div>
+      </header>
+
+      <!-- ============== MANDATE ============== -->
+      <section class="section" id="mandate">
+        <div class="section-eyebrow"><span class="num">01</span><span>Mandate</span><span class="ko">임무</span></div>
+        <h2>Mandate</h2>
+        <div class="card"><div class="card-content">
+          <p>The strategic question this document answers is simple: <strong>across the six brands AVO operates or partners on, what products should be built next, and why those?</strong> Not a wish list, not a brainstorm, but a research-grounded pipeline.</p>
+          <p>The premise: <strong>US CPG products that have crossed a credibility threshold can often be translated to Korea profitably, if the brand fit is right and the translation accounts for Korean retail and consumer reality.</strong> The four-step translation frame (미국에서 된 이유 → 한국 적용 → 디자인 방향 → 채널 전략) is the spine of every product concept below.</p>
+          <p>This is not a proposal in the formal sense. It's a structured menu, not a contract. Each concept is a place a brand could go, not a commitment that it will.</p>
+        </div></div>
+        <div class="card callout-card"><div class="card-content">
+          <div class="callout-label">Methodology · 방법론</div>
+          <p>Each concept is tested against four questions before it earns a place in the pipeline: why a US analog scaled, what the Korean adaptation looks like, what visual direction reads right for the brand, and which channel rewards the format. If a concept fails any of the four, it doesn't make it in.</p>
+        </div></div>
+      </section>
+
+      <!-- ============== FRAME ============== -->
+      <section class="section" id="frame">
+        <div class="section-eyebrow"><span class="num">02</span><span>Strategic Frame</span><span class="ko">전략 프레임</span></div>
+        <h2>Strategic Frame</h2>
+        <div class="card"><div class="card-content">
+          <p>Every concept in this document was tested against a four-step translation frame. We did not invent this frame for this document. It was already built into the trend research deck in this folder, and applied to AG1 and Olipop as worked examples. We're now applying it systematically across all six brands.</p>
+          <h3>The four steps</h3>
+          <p><strong>1. 미국에서 된 이유 — Why it worked in the US.</strong> Not "what is the product," but specifically what cultural, distribution, or product-design factor caused this brand to break out. AG1 won on single-SKU premium positioning that removed choice fatigue. Olipop won on functional-soda framing that converted soda drinkers into wellness customers without a cognitive jump.</p>
+          <p><strong>2. 한국 적용 — Korean adaptation.</strong> What gets reframed for Korean retail. 홈쇼핑 needs simplification (한 번에 하나의 약속). 쿠팡 needs price ladder. 마켓컬리 needs premium story. Convenience store needs single-serve viral. Each US win has to be re-engineered for the Korean channel that fits it.</p>
+          <p><strong>3. 디자인 방향 — Design direction.</strong> The visual translation. AG1's clinical-but-premium typography becomes 어스톤 + 과학적 타이포 + 성분 일러스트. Olipop's playful-functional becomes 단일 컬러 강한 KV + 기능 라벨. The brand's existing identity (Bobsnu's heritage, Pheeew's editorial, Daoom's traditional) determines which adaptation reads right.</p>
+          <p><strong>4. 채널 전략 — Channel strategy.</strong> Where does this product live first. 홈쇼핑 explosion or 쿠팡 ladder or 마켓컬리 premium or CU/GS25 viral or 자사몰 DTC. Each concept names its primary channel and why.</p>
+        </div></div>
+        <div class="card callout-card"><div class="card-content">
+          <div class="callout-label">Reference Matrix · 참고 매트릭스</div>
+          <p>Existing trend research deck applies a 2x2 positioning matrix: <strong>Snack-like (Fun & Indulgent) ↔ Med-like (Clinical & Therapeutic)</strong> on one axis, and <strong>Premium/Niche (Condition-specific) ↔ Mass/General Wellness</strong> on the other. Each brand has a natural quadrant, and each concept below is also tagged by quadrant.</p>
+        </div></div>
+      </section>
+
+      <!-- ============== KOREAN MARKET ============== -->
+      <section class="section" id="market">
+        <div class="section-eyebrow"><span class="num">03</span><span>Korean Market Context</span><span class="ko">한국 시장 맥락</span></div>
+        <h2>Korean Market Context (2026)</h2>
+        <div class="card"><div class="card-content">
+          <p>Before designing concepts, the question is what's actually moving in Korean wellness right now. Below is the operative landscape as of April 2026, drawn from market reports, retail data, and observation of the major channels.</p>
+          <h3>Categories driving growth</h3>
+          <p><strong>유산균 / 프로바이오틱스.</strong> 락토핏 (Chong Kun Dang) still dominates the mass segment, with reported annual sales over ₩4,000억 (~$300M) in 2024 according to industry reports. The premium prebiotic and synbiotic segment is fragmenting, which is exactly where Pheeew and Sensitive Ones can play.</p>
+          <p><strong>이너뷰티 (Inner Beauty).</strong> Korean inner beauty is now a ₩1조+ market according to Korea Health Functional Food Association data. Collagen, ceramide, biotin, and vitamin-skin axis products dominate. CJ제일제당, 농심, 코웨이 all entered, signaling category maturity.</p>
+          <p><strong>장건강 (Gut Health).</strong> Gut health crossed into mainstream conversation post-COVID. Search volume on 장건강, 식이섬유, 프리바이오틱스 has roughly doubled 2022 to 2025 per Naver DataLab. This is Pheeew's home.</p>
+          <p><strong>저당 / 제로 / 무설탕.</strong> Sugar reduction is now a baseline expectation. Zero-calorie soda category exploded post-2022. 저당 candy and gummy growing rapidly.</p>
+          <p><strong>식이섬유 / 포만감 (Fiber / Satiety).</strong> The GLP-1 era. Wegovy launched in Korea Q4 2024, Mounjaro followed in 2025. While prescription is constrained, the cultural awareness of GLP-1 has created appetite for fiber-rich satiety products as alternative or adjacent.</p>
+          <p><strong>수면 / 스트레스 (Sleep / Stress).</strong> Magnesium glycinate, L-theanine, melatonin (Korean dosing 0.3mg via OTC) are growing. Younger Korean consumers actively self-medicate sleep through supplements rather than prescription.</p>
+          <h3>Channels and what each rewards</h3>
+          <p><strong>홈쇼핑.</strong> Still ₩6조+ industry. Rewards simple 한 줄 약속, 정기배송 lock-in, single hero SKU. Punishes complex bundles, weak demos, abstract benefits. Best for Bobsnu, Daoom, 대학두유.</p>
+          <p><strong>쿠팡.</strong> Dominant e-commerce, ₩40조+ GMV. Rewards price ladder, fast logistics, top-funnel discovery. Punishes low margin, brand erosion. Best for Pheeew, AVO, mid-priced supplement.</p>
+          <p><strong>마켓컬리.</strong> Premium grocery. Rewards premium story, clean ingredients, photogenic. Punishes anything that looks supplement-shop. Best for Pheeew RTD, AVO, premium 대학두유.</p>
+          <p><strong>편의점 (CU, GS25, 7-Eleven, 이마트24).</strong> Grew supplement and wellness shelf 2024 to 2026. Rewards viral single-serve, single-shot pricing (₩2,000–4,000), MZ-friendly. Punishes full-bottle supplement, high price. Best for Pheeew shot/stick, AVO single-serve, viral SKUs.</p>
+          <p><strong>네이버 쇼핑 / 자사몰.</strong> Important for premium brands and DTC. Rewards storytelling, subscription, repeat purchase. Best for Sensitive Ones, AVO, premium SKUs.</p>
+          <p><strong>TikTok Shop Korea.</strong> Launched in Korea late 2025. Still scaling but rewarding viral product-form-factor combos similar to US TikTok Shop. Bloom Nutrition's US playbook is very directly applicable. Best for Pheeew, AVO, anything visual or single-serve.</p>
+        </div></div>
+      </section>
+
+      <!-- ============== US TRENDS ============== -->
+      <section class="section" id="trends">
+        <div class="section-eyebrow"><span class="num">04</span><span>US Trends to Translate</span><span class="ko">미국 트렌드 매핑</span></div>
+        <h2>US Trends Worth Translating</h2>
+        <p style="font-size: 14px; color: var(--label-primary); padding: 0 12px; margin-bottom: 14px; line-height: 1.55; max-width: 760px;">From the trend deck and from broader market observation, these are the US wellness/CPG trends that have crossed credibility and revenue thresholds, and that have natural translation paths into Korean retail.</p>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th>US Trend</th><th>Anchor brands</th><th>Why it scaled</th><th>KR translation potential</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Functional soda</strong></td><td>Olipop, Poppi, Culture Pop</td><td>Convert soda drinkers via prebiotic / fiber framing. No cognitive jump required.</td><td>High. Pheeew RTD. AVO 한방 sparkling. (대학두유는 두유 코어에서 벗어나지 않는다.)</td></tr>
+              <tr><td><strong>Daily greens powder</strong></td><td>AG1, Bloom Nutrition, Grüns</td><td>Single SKU, premium positioning, removes choice fatigue. Subscription-native.</td><td>Very high. Daoom 생식 modernization. AVO Korean greens. 홈쇼핑 정기배송 fit.</td></tr>
+              <tr><td><strong>Wellness shot</strong></td><td>Suja, So Good So You, Magic Mind, KOR</td><td>Single-serve, single benefit, ambient or chilled. Convenience-store-ready.</td><td>High. AVO Korean adaptogen shot. 편의점 viral fit. Pheeew shot extension.</td></tr>
+              <tr><td><strong>Functional gummy</strong></td><td>Olly, Lemme, SmartyPants, Grüns</td><td>Snack-like delivery, condition-specific (sleep, focus, debloat). Female-skewed.</td><td>High. SO Sleep Support gummy. AVO functional gummy. Pheeew Calm gummy (already conceptualized).</td></tr>
+              <tr><td><strong>Liposomal premium supplement</strong></td><td>Cymbiotika, Quicksilver Scientific</td><td>Bioavailability story, premium pricing ($40-90), educational marketing.</td><td>Medium. AVO premium tier. 마켓컬리 / 자사몰 only. Not for 홈쇼핑.</td></tr>
+              <tr><td><strong>Adaptogen / mushroom alt-coffee</strong></td><td>MUD\WTR, Rasa, Four Sigmatic</td><td>Coffee replacement framing. Calm energy. Daily ritual.</td><td>Medium-high. Bobsnu 약콩 phyto daily. AVO Korean adaptogen daily. Daoom 한방 adaptogen.</td></tr>
+              <tr><td><strong>Inner beauty supplement</strong></td><td>Hum Nutrition, Ritual, Care/Of</td><td>Female-led, condition-specific, evidence-presented. Subscription-native.</td><td>Already mainstream in Korea, but premium gentle-formulation gap exists. SO play.</td></tr>
+              <tr><td><strong>Plant protein RTD</strong></td><td>Owyn, Koia, Ripple, Bored Cow</td><td>Vegan-clean, no whey, allergen-friendly. Convenience-store ready.</td><td>High for 대학두유. Korean soy heritage flips US "no soy" framing into a strength.</td></tr>
+              <tr><td><strong>GLP-1 adjacent / satiety fiber</strong></td><td>Magic Mind, Lemme Debloat, Mounjaro adjacents</td><td>Catching the GLP-1 cultural wave. Fiber, satiety, gut-as-weight-management.</td><td>Very high for 2026. Pheeew 포만감 stick. SO 위 케어. Underexploited in Korea so far.</td></tr>
+              <tr><td><strong>Premium tea sticks / crystals</strong></td><td>Pique Tea, Cusa Tea</td><td>Portable, premium, ritual-driven. Tea drinkers convert at high LTV.</td><td>High for AVO and Bobsnu. Korean tea heritage (보이차, 한방차) fits naturally.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============== PORTFOLIO ============== -->
+      <section class="section" id="portfolio">
+        <div class="section-eyebrow"><span class="num">05</span><span>Brand Portfolio</span><span class="ko">브랜드 포트폴리오</span></div>
+        <h2>Brand Portfolio</h2>
+        <p style="font-size: 14px; color: var(--label-primary); padding: 0 12px; margin-bottom: 14px; line-height: 1.55; max-width: 760px;">Six brands operate under or alongside AVO. Each has its own identity, audience, and natural product range. Before any concept can be assigned, we need to be clear on what each brand can and cannot carry.</p>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th>Brand</th><th>Identity</th><th>Audience</th><th>2x2 Position</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Bobsnu</strong></td><td>약콩 (서목태) phytochemical H&B. 서울대 이기원 교수.</td><td>30-50대 건강 의식, 홈쇼핑 친화</td><td>Med-like / Mass</td></tr>
+              <tr><td><strong>대학두유</strong></td><td>정선·평창 농가 공동 소유. 두유 코어. 평창 캠퍼스 제조.</td><td>가족 단위, 농산물 신뢰 소비자</td><td>Med-like / Mass</td></tr>
+              <tr><td><strong>다움</strong></td><td>1988년 38년 가업. 김수경 박사. 한국 최초 생식 발명.</td><td>40-60대 전통 신뢰 + 헤리티지 소비자</td><td>Med-like / Premium</td></tr>
+              <tr><td><strong>AVO</strong></td><td>다움 헤리티지 현대화. Raw whole food + healing. 미국 시장 지향.</td><td>20-30대 premium wellness, 글로벌 마인드</td><td>Premium / Med-like</td></tr>
+              <tr><td><strong>Pheeew</strong></td><td>Gut + Function. 신바이오틱. Powder → drink 확장.</td><td>20-30대 MZ, 미국 1차 / 한국 확장</td><td>Premium / Mass-Snack</td></tr>
+              <tr><td><strong>Sensitive Ones</strong></td><td>Inner care. "(Function) + Support" 명명. Evidence-led, gentle formulation.</td><td>20-30대 여성, 민감성 자각 인식</td><td>Premium / Niche</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size: 13px; color: var(--label-secondary); padding: 0 12px; margin-top: 8px; line-height: 1.55;">Now to the concept matrix. Each brand below gets a short identity recap and 2 to 4 concrete product concepts, applied through the four-step translation frame.</p>
+      </section>
+
+      <!-- ============== BOBSNU ============== -->
+      <section class="brand-block" id="bobsnu">
+        <div class="section-eyebrow"><span class="num">06.1</span><span>Bobsnu</span><span class="ko">밥스누</span></div>
+        <div class="brand-card bobsnu">
+          <div class="brand-card-header">
+            <h2>Bobsnu · 서울대 밥스누</h2>
+            <div class="brand-tag">약콩 phytochemical · 서울대 이기원 교수 연구 · CEO 김형서 · 가족 경영</div>
+          </div>
+          <div class="brand-card-summary">Bobsnu's moat is the 서울대 이기원 교수 phytochemical research and the heritage of 약콩 (서목태) as a Korean superfood. Existing SKUs: 약콩차, 약콩샴푸, 생식, 두유. Current 홈쇼핑 anchor (파이토100, 파이토블랙약콩샴푸). Brand can carry phytochemical-based supplement, hair, body, and beverage extensions, but should not stray from the 약콩 / 검은 superfood spine.</div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 01</span>
+              <h3>약콩 Hair & Inside Care · 통합 모발 영양제</h3>
+              <div class="ko-name">Bobsnu Hair Vitality Capsule + Drink Hybrid</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Nutrafol</strong> (~$200M+ revenue, Unilever-acquired 2022 majority stake). <strong>Vegamour</strong>. <strong>Olly Hair Boost</strong>. Hair-and-skin supplements have grown into a $1B+ US category, driven partially by GLP-1 hair loss adjacent demand.</dd>
+              <dt>미국에서 된 이유</dt><dd>Hair loss anxiety crosses age, gender, income. Medical-grade ingredients (saw palmetto, marine collagen, biotin) packaged as daily wellness rather than treatment. Subscription-native, condition-specific.</dd>
+              <dt>한국 적용</dt><dd>Korea has 탈모 anxiety culture and existing 모발 영양 supplement category, but 약콩 has not been used as the hero ingredient despite traditional reputation. Combines existing Bobsnu 약콩샴푸 product line with internal supplement.</dd>
+              <dt>디자인 방향</dt><dd>Heritage 약콩 photography + clinical typography + 이기원 교수 신뢰 마크. 캡슐 + 드링크 hybrid 정기배송 box. Black-and-cream palette consistent with existing Bobsnu identity.</dd>
+              <dt>채널</dt><dd>홈쇼핑 1차 (탈모 케어 단일 약속). 자사몰 정기배송. 쿠팡 가격 ladder.</dd>
+              <dt>차별점</dt><dd>Korean manufacturing partner + 서울대 이기원 교수 연구 + 약콩 헤리티지의 합. 단일 비타민이 아닌 inside+outside 통합.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 02</span>
+              <h3>Bobsnu Phyto Daily · 매일 마시는 phytochemical</h3>
+              <div class="ko-name">파이토 데일리 RTD · 검은 슈퍼푸드 음료</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>MUD\WTR</strong> (mushroom adaptogen daily, ~$30M+ revenue 2024). <strong>Four Sigmatic</strong>. <strong>Athletic Greens RTD line</strong>. Daily ritual functional drink as coffee alternative.</dd>
+              <dt>미국에서 된 이유</dt><dd>Wellness consumers want a daily functional ritual that is not coffee. Adaptogen framing converts both health-conscious and burnout audiences. Premium pricing on a daily SKU.</dd>
+              <dt>한국 적용</dt><dd>Korea has 한방차, 검은콩차 heritage but no premium daily ritual product. 약콩 + 검은참깨 + 흑미 + 한방 mild adaptogen. Single-serve stick or RTD bottle.</dd>
+              <dt>디자인 방향</dt><dd>검은 / 갈색 무광 패키지. 약콩 일러스트. 한자 + 한글 typography. Premium serif. Daily ritual photography.</dd>
+              <dt>채널</dt><dd>마켓컬리 (premium morning ritual). 자사몰. 쿠팡. 편의점 (single-serve stick variant).</dd>
+              <dt>차별점</dt><dd>기존 Bobsnu 약콩차의 premium ritualized 진화. 미국 MUD\WTR이 가지지 못한 한국 헤리티지 깊이.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 03</span>
+              <h3>Bobsnu Phyto Trio · 검은 슈퍼푸드 분말 스틱</h3>
+              <div class="ko-name">검은 phytochemical 3종 (약콩 + 검은참깨 + 흑미) 스틱</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Bloom Nutrition Greens</strong> ($100M+ ARR, TikTok Shop dominance 2024). <strong>Grüns</strong>. <strong>AG1</strong>. Daily greens stick as TikTok-viral category.</dd>
+              <dt>미국에서 된 이유</dt><dd>Stick-format daily greens converted skeptics through social proof and visible-effect storytelling on TikTok. Bloom proved condition-specific (gut, debloat, energy) variants drive subscription.</dd>
+              <dt>한국 적용</dt><dd>Korea has 미숫가루, 선식 traditional but no modern premium stick format that owns the category. 약콩-led "검은 슈퍼푸드 트리오" with phytochemical positioning.</dd>
+              <dt>디자인 방향</dt><dd>검은 무광 + 골드 디테일. 단일 스틱 강한 KV. 영양 인포그래픽. Premium science feel mixed with heritage authority.</dd>
+              <dt>채널</dt><dd>홈쇼핑 정기배송 (한 줄 약속: 매일 검은 슈퍼푸드). TikTok Shop Korea (viral). 자사몰 정기.</dd>
+              <dt>차별점</dt><dd>미국 Bloom의 "녹색" 대신 한국이 신뢰하는 "검은색" superfood. 단일 SKU 프리미엄 단순화.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== DAOOM ============== -->
+      <section class="brand-block" id="daoom">
+        <div class="section-eyebrow"><span class="num">06.2</span><span>Daoom</span><span class="ko">다움</span></div>
+        <div class="brand-card daoom">
+          <div class="brand-card-header">
+            <h2>다움 · Daoom</h2>
+            <div class="brand-tag">1988년 창립 · 38년 가업 · 김수경 박사 · 한국 최초 생식 발명 · 3대 가업</div>
+          </div>
+          <div class="brand-card-summary">Daoom's moat is heritage. 38 years, 김수경 박사, the inventor of 생식 in Korea. The brand has natural authority that no startup can buy. Product range can extend from 생식 into raw-ingredient-based supplement powders, premium 한방 adaptogens, and traditional-meets-modern wellness, but should never stray from the "healing through food" thesis.</div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 01</span>
+              <h3>Daoom Daily 생식 · 38년 헤리티지 단일 스틱</h3>
+              <div class="ko-name">Daoom Modern 생식 Daily Stick · AG1의 한국 답</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>AG1</strong> ($1.2B valuation, 2024 Forbes). Single-SKU daily greens, premium subscription. The AG1 playbook: one product, one promise, premium price, lifetime customer.</dd>
+              <dt>미국에서 된 이유</dt><dd>단일 SKU + premium positioning removes choice fatigue. "If I do one thing for my health, this is it." Subscription locks in lifetime value at high CAC.</dd>
+              <dt>한국 적용</dt><dd>한국에는 미숫가루, 선식 전통이 있지만 현대화된 premium daily 생식 product가 없다. Daoom의 38년 헤리티지가 정확히 이 자리에 들어맞는다. AG1 like single-SKU, single-benefit, single-stick.</dd>
+              <dt>디자인 방향</dt><dd>Modern 한지 텍스처 + 김수경 박사 sign + science-backed nutritional infographic. 38년 헤리티지 mark prominently. Earth-tone palette.</dd>
+              <dt>채널</dt><dd>홈쇼핑 1차 (38년 가업 + 한국 최초 생식 스토리 강력). 마켓컬리. 자사몰 정기배송.</dd>
+              <dt>차별점</dt><dd>한국 최초 생식 발명자가 만든 modern daily 생식. 미국 AG1이 흉내낼 수 없는 진짜 헤리티지.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 02</span>
+              <h3>Daoom 한방 Adaptogen Powder · 한방 어댑토겐 분말</h3>
+              <div class="ko-name">홍삼·황기·당귀 어댑토겐 데일리 파우더</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Sun Potion</strong>, <strong>Anima Mundi</strong>, <strong>Moon Juice</strong> (premium adaptogen powder, $40-80 per jar). Niche but high-LTV.</dd>
+              <dt>미국에서 된 이유</dt><dd>Adaptogen framing for stress and burnout. Premium pricing on traditional Eastern ingredients repackaged for Western wellness audience. Subscription friendly.</dd>
+              <dt>한국 적용</dt><dd>한국에는 한방 정통이 있지만 모던 패키징 + daily ritual format으로 정리된 product가 부족. Daoom의 healing-through-food 신념과 직결.</dd>
+              <dt>디자인 방향</dt><dd>한지 + 묵 + 약재 일러스트. 38년 헤리티지 + 김수경 박사 추천 도장. Premium glass jar OR refillable pouch.</dd>
+              <dt>채널</dt><dd>마켓컬리 (premium). 자사몰. 마켓컬리 → 쿠팡 ladder.</dd>
+              <dt>차별점</dt><dd>미국 어댑토겐 브랜드가 한국 한방을 흉내내지만, Daoom은 한국에서 38년 한방 진짜를 한다.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 03</span>
+              <h3>Daoom 식사 대용 RTD · 생식 마시는 식사</h3>
+              <div class="ko-name">Daoom Drinkable Meal · 생식 RTD 한 끼</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Huel RTD</strong> (~$200M+ revenue 2024 reported). <strong>Soylent</strong>. <strong>Kachava</strong>. Drinkable meal-replacement category.</dd>
+              <dt>미국에서 된 이유</dt><dd>Time-poor wellness consumers want a complete meal in a bottle. Plant-based, low-sugar, nutrient-complete. Office worker daily lunch replacement.</dd>
+              <dt>한국 적용</dt><dd>한국에서 식사 대용 카테고리는 빠르게 성장 중 (단백질 RTD, 제로 칼로리 RTD). 다움의 생식 헤리티지가 가장 자연스러운 진입점.</dd>
+              <dt>디자인 방향</dt><dd>Modern bottle + heritage label. 영양 정보 강한 디자인. 직장인 daily lunch 컨텍스트.</dd>
+              <dt>채널</dt><dd>편의점 (직장인 점심). 마켓컬리. 쿠팡.</dd>
+              <dt>차별점</dt><dd>서양식 meal-replacement이 아닌 "한국 생식의 마실 수 있는 진화."</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== 대학두유 ============== -->
+      <section class="brand-block" id="daehak">
+        <div class="section-eyebrow"><span class="num">06.3</span><span>대학두유</span><span class="ko">Daehak Soymilk</span></div>
+        <div class="brand-card daehak">
+          <div class="brand-card-header">
+            <h2>대학두유</h2>
+            <div class="brand-tag">정선·평창 콩 농가 공동 소유 · 서울대 평창 캠퍼스 제조 · 농가 equity 모델</div>
+          </div>
+          <div class="brand-card-summary">대학두유's moat is the farmer-equity story and Pyeongchang clean-region credibility. Soymilk core. Brand should stay heavily focused on soymilk and soy-based products: functional soy beverages, soy protein, fermented soy, and barista-grade soymilk. Should not lose the agricultural integrity story or stray from soy.</div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 01</span>
+              <h3>대학두유 Functional Soy RTD · 기능성 두유 음료</h3>
+              <div class="ko-name">단백질 + 프로바이오틱 + 식이섬유 기능성 두유</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Owyn</strong> (plant protein RTD, acquired by PepsiCo 2024). <strong>Koia</strong>. <strong>Ripple</strong>. Plant-protein RTD has scaled from niche to mainstream in US.</dd>
+              <dt>미국에서 된 이유</dt><dd>Vegan-clean, no whey, allergen-friendly. Convenience-store-ready single-serve. Functional add-ons (caffeine, probiotic, collagen alt) extended SKU range.</dd>
+              <dt>한국 적용</dt><dd>한국 두유 시장은 매일유업, 정식품 dominant이지만 functional + premium 카테고리는 비어 있다. 농가 공동 소유 + Pyeongchang 평창 청정지역 story가 차별점.</dd>
+              <dt>디자인 방향</dt><dd>농가 사진 + 평창 산 일러스트. 단백질 / 식이섬유 / 프로바이오틱 라벨 강력. Modern but rooted.</dd>
+              <dt>채널</dt><dd>편의점 1차 (직장인 단백질 음료). 마켓컬리. 쿠팡.</dd>
+              <dt>차별점</dt><dd>매일유업/정식품 대량생산 vs 농가 공동 소유 + 평창 제조의 신뢰 story.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 02</span>
+              <h3>대학두유 Drinkable Soy Probiotic · 발효 두유 RTD</h3>
+              <div class="ko-name">발효 두유 + 식물성 프로바이오틱 + 단백질 마실 수 있는 요거트</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Forager Project</strong> (cashew-based drinkable yogurt, $50M+ reported revenue). <strong>Bored Cow</strong>. <strong>Lifeway Kefir</strong>. Plant-based drinkable probiotic category $500M+ in US.</dd>
+              <dt>미국에서 된 이유</dt><dd>Lactose-intolerant + plant-curious consumers want gut benefit without dairy. Drinkable yogurt format wins on convenience. Probiotic claim translates premium pricing without requiring supplement identity.</dd>
+              <dt>한국 적용</dt><dd>한국 발효 두유 (콩물, 쉰두유) 전통이 있지만 modern drinkable probiotic 형태로 packaged된 brand가 부재. 대학두유의 평창 콩 + 발효 R&D 결합 가능. 매일유업 식물성 라인의 농가 답.</dd>
+              <dt>디자인 방향</dt><dd>농가 + 발효 항아리 일러스트. CFU 수치 + 식물성 단백질 라벨 강력. Modern but rooted bottle.</dd>
+              <dt>채널</dt><dd>편의점 (직장인 아침 음료). 마켓컬리. 쿠팡 정기배송.</dd>
+              <dt>차별점</dt><dd>유산균 음료 시장은 락토핏 dominant이지만 plant-based 두유 발효 segment는 비어 있다. 동물성 dairy에 민감한 소비자 직접 타겟.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 03</span>
+              <h3>대학두유 단백질 바 · 평창 콩 단백질 스낵</h3>
+              <div class="ko-name">대학두유 Soy Protein Bar · 한국 단백질 바의 농가 답</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Quest</strong>, <strong>RXBar</strong> (Kellogg's $600M acquisition), <strong>GoMacro</strong>. Protein bar category remains $7B+ in US.</dd>
+              <dt>미국에서 된 이유</dt><dd>Convenient protein delivery, clean ingredient story (RXBar's "no BS" labeling). Snackification of nutrition.</dd>
+              <dt>한국 적용</dt><dd>한국 단백질 바 시장은 myProtein, 그래놀라 dominant이지만 농가 + heritage story bar가 부재. 평창 콩 + low-sugar + 식이섬유.</dd>
+              <dt>디자인 방향</dt><dd>RXBar식 깨끗한 ingredient labeling. 농가 photography. Modern but earnest.</dd>
+              <dt>채널</dt><dd>편의점 (직장인 스낵). 쿠팡. 마켓컬리.</dd>
+              <dt>차별점</dt><dd>서양 단백질 바가 흉내 못하는 농가 공동 소유 + 평창 청정지역 story.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 04</span>
+              <h3>대학두유 Barista Soy · 카페용 프리미엄 두유</h3>
+              <div class="ko-name">바리스타 등급 두유 · B2B 카페 + B2C retail 양 라인</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Oatly Barista Edition</strong> ($10B+ peak valuation; barista line is the biggest revenue driver). <strong>Califia Farms Barista Blend</strong>. <strong>Pacific Foods</strong>. Plant-milk barista category drives both café penetration and retail trial.</dd>
+              <dt>미국에서 된 이유</dt><dd>B2B + B2C dual-channel flywheel. Cafés need plant-milk that foams and tastes good. Consumers see brand in cafés, then buy at retail. Distribution and trust compound.</dd>
+              <dt>한국 적용</dt><dd>한국 카페 시장 (스타벅스 + 스페셜티 + 개인 카페) 거대. 두유 옵션은 mass (매일유업, 정식품)와 수입 (Oatly) 양극화. 농가 두유 + 바리스타 등급 + premium positioning은 비어 있다.</dd>
+              <dt>디자인 방향</dt><dd>Café-friendly 1L portion + 200mL retail 두 종. Minimal modern label. 농가 sign small. Barista certification badge.</dd>
+              <dt>채널</dt><dd>B2B 스페셜티 카페 입점 1차 (블루보틀 + 펠트 + 개인 로스터리). 마켓컬리. 자사몰. B2B 인지도가 retail 견인.</dd>
+              <dt>차별점</dt><dd>Oatly가 갖지 못한 한국 농가 stake holding + 평창 origin story. 매일유업 두유보다 분명한 specialty premium positioning.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== AVO ============== -->
+      <section class="brand-block" id="avo">
+        <div class="section-eyebrow"><span class="num">06.4</span><span>AVO</span><span class="ko">All Vital Organics</span></div>
+        <div class="brand-card avo">
+          <div class="brand-card-header">
+            <h2>AVO · All Vital Organics</h2>
+            <div class="brand-tag">Daoom 헤리티지 현대화 · Raw whole food + healing · 미국 시장 지향 (장기) · 20-30대 premium</div>
+          </div>
+          <div class="brand-card-summary">AVO is the brand we're building for the next 10 years of US-facing premium wellness. It modernizes Daoom's heritage but speaks to a younger, globally-minded audience. Brand can carry premium adaptogens, wellness shots, liposomal supplements, premium tea, and Korean-rooted superfood products that read clean to a US consumer. Should not become a price-fighter brand.</div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 01</span>
+              <h3>AVO Korean Wellness Shot Trio · 한방 어댑토겐 샷 3종</h3>
+              <div class="ko-name">Mental Clarity · Immunity · Digestion 3-shot 라인업</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Magic Mind</strong> (~$20M+ revenue 2024). <strong>Suja Shots</strong>. <strong>So Good So You</strong>. <strong>KOR</strong>. <strong>Vive Organic</strong>. Wellness shot category $1B+ in US per industry reports.</dd>
+              <dt>미국에서 된 이유</dt><dd>Single-serve, single-benefit, premium pricing ($3-9 per shot). Convenience-store-ready. "Functional moment in a bottle." Magic Mind specifically owned mental clarity through L-theanine + matcha + nootropic.</dd>
+              <dt>한국 적용</dt><dd>한국 편의점은 wellness shot 카테고리가 아직 비어 있다. 한방 어댑토겐 (인삼, 황기, 영지, 매실, 도라지) 사용한 single-shot trio가 자리를 점할 수 있다. 미국 진출 시에도 곧바로 transferable.</dd>
+              <dt>디자인 방향</dt><dd>Pheeew와 분명히 구분되는 premium glass shot bottle. 한방 일러스트 minimalist. 3개 색상 분명한 라인업.</dd>
+              <dt>채널</dt><dd>편의점 (CU, GS25, 7-Eleven 입점). 마켓컬리. 자사몰. 미국 진출 후 Whole Foods, Erewhon 가능.</dd>
+              <dt>차별점</dt><dd>미국 wellness shot이 갖지 못한 한국 한방 정통성. AVO 헤리티지가 Magic Mind에 없는 깊이를 준다.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 02</span>
+              <h3>AVO Premium Liposomal · 리포소말 비타민 라인</h3>
+              <div class="ko-name">고흡수 리포소말 비타민 C · 글루타치온 · 마그네슘 라인</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Cymbiotika</strong> ($100M+ revenue reported, premium liposomal). <strong>Quicksilver Scientific</strong>. <strong>Pure Encapsulations</strong>. Premium supplement segment $40-90 per bottle.</dd>
+              <dt>미국에서 된 이유</dt><dd>Bioavailability story (liposomal absorption 5-10x higher than capsule). Premium pricing justified by science. Educational marketing converts skeptics into subscribers.</dd>
+              <dt>한국 적용</dt><dd>한국 리포소말 supplement 시장은 거의 비어 있다. 일부 수입품만 존재. AVO가 한국 자체 개발 리포소말 라인을 출시하면 카테고리 owner가 될 수 있다.</dd>
+              <dt>디자인 방향</dt><dd>병원-quality clinical typography + 한방 헤리티지 mark. Premium glass dropper bottle. Educational packaging (흡수율 비교 그래프).</dd>
+              <dt>채널</dt><dd>자사몰 only (premium positioning protect). 마켓컬리. 약사 추천 채널.</dd>
+              <dt>차별점</dt><dd>한국 자체 R&D 리포소말 + 다움 헤리티지 = Cymbiotika가 갖지 못한 동양 의학 기반의 premium science.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 03</span>
+              <h3>AVO Korean Greens · 한국 슈퍼푸드 데일리 파우더</h3>
+              <div class="ko-name">인삼 + 매실 + 흑마늘 + 적포도 · 데일리 한국식 그린스</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>AG1</strong>, <strong>Bloom Greens</strong>, <strong>Grüns</strong>. Daily greens powder $45-100 per month subscription.</dd>
+              <dt>미국에서 된 이유</dt><dd>Single-product daily ritual. Removes choice fatigue. Subscription-native. Bloom proved condition-specific variants (debloat, energy) drive retention.</dd>
+              <dt>한국 적용</dt><dd>한국 슈퍼푸드 (인삼, 매실, 흑마늘) + Daoom 생식 헤리티지로 만든 한국식 daily greens. AG1가 갖지 못한 동양 슈퍼푸드 정통성.</dd>
+              <dt>디자인 방향</dt><dd>Earth-tone + 인삼 일러스트. 다움 38년 헤리티지 mark. Premium science feel.</dd>
+              <dt>채널</dt><dd>자사몰 정기배송. 마켓컬리. 미국 진출 후 Whole Foods.</dd>
+              <dt>차별점</dt><dd>미국 daily greens가 흉내내는 동양 슈퍼푸드를 진짜 한국 헤리티지로 만든 카테고리 owner.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 04</span>
+              <h3>AVO Premium Tea Sticks · 한방차 분말 스틱</h3>
+              <div class="ko-name">보이차 · 한방차 portable 분말 스틱</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Pique Tea</strong> (premium tea crystals, Whole Foods national). <strong>Cusa Tea</strong>. Premium portable tea $1-3 per stick.</dd>
+              <dt>미국에서 된 이유</dt><dd>Tea drinkers convert at high LTV. Premium positioning ($30-50 per box of 14). Portable convenience without sacrificing quality.</dd>
+              <dt>한국 적용</dt><dd>한국 차 시장은 mass (오설록, 동서식품)와 prestige (수입 보이차) 사이가 비어 있다. 한방차 + 보이차 portable stick AVO 라인.</dd>
+              <dt>디자인 방향</dt><dd>한지 + 갈색 + 골드. Heritage typography. Premium gift-quality box.</dd>
+              <dt>채널</dt><dd>마켓컬리. 자사몰. 백화점 ladder. 미국 진출 후 Whole Foods.</dd>
+              <dt>차별점</dt><dd>한국 한방차 정통성을 modern stick format으로. 미국 Pique Tea보다 깊은 헤리티지.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== PHEEEW ============== -->
+      <section class="brand-block" id="pheeew">
+        <div class="section-eyebrow"><span class="num">06.5</span><span>Pheeew</span><span class="ko">피우</span></div>
+        <div class="brand-card pheeew">
+          <div class="brand-card-header">
+            <h2>Pheeew</h2>
+            <div class="brand-tag">Gut + Function · 신바이오틱 · 100mL puree pouch (Phase 1) · powder → drink 확장</div>
+          </div>
+          <div class="brand-card-summary">Pheeew is the gut-and-function brand. Anchor SKU is the 100mL synbiotic puree pouch (US launch). Korean version or brand extension can lean into snack-like functional formats: drinks, sticks, gummies. Synbiotic stack (prebiotic + probiotic) is the technical moat. Brand can carry RTD soda, daily stick, functional gummy. Should not become a generic supplement brand.</div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 01</span>
+              <h3>Pheeew RTD Synbiotic Soda · 신바이오틱 기능성 음료</h3>
+              <div class="ko-name">Pheeew의 한국용 Olipop 답 · 신바이오틱 + 매실/식혜 base RTD</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Olipop</strong> ($850M revenue, $1B+ valuation 2024). <strong>Poppi</strong> ($1.95B PepsiCo acquisition March 2025). <strong>Culture Pop</strong>. Functional soda category exploded post-2022.</dd>
+              <dt>미국에서 된 이유</dt><dd>Functional + nostalgic soda framing. 9g fiber + low sugar + soda taste convinced soda drinkers without requiring identity shift. Snack-like fun and indulgent quadrant.</dd>
+              <dt>한국 적용</dt><dd>한국 functional soda 시장은 거의 비어 있다 (단순 zero-cal soda는 saturated). Pheeew의 신바이오틱 stack + 한국 fruit base (매실, 유자, 자몽) RTD가 카테고리를 만들 수 있다.</dd>
+              <dt>디자인 방향</dt><dd>Pheeew 기존 brand identity (전기 노란색 #DAFF00, dark forest, cream) can. 단일 컬러 강한 KV per flavor. Snack-like fun.</dd>
+              <dt>채널</dt><dd>편의점 1차 (CU, GS25 입점). 쿠팡. 마켓컬리. TikTok Shop Korea.</dd>
+              <dt>차별점</dt><dd>Olipop은 fiber만 강조. Pheeew는 신바이오틱 (prebiotic + probiotic) full stack. 한국 fruit base.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 02</span>
+              <h3>Pheeew Daily Synbiotic Stick · 신바이오틱 데일리 스틱</h3>
+              <div class="ko-name">매일 신바이오틱 + 식이섬유 + 그린스 single stick</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Bloom Nutrition Greens</strong> ($100M+ ARR via TikTok Shop). <strong>AG1</strong>. <strong>Grüns</strong>. Daily stick category dominant on TikTok Shop.</dd>
+              <dt>미국에서 된 이유</dt><dd>Single-serve daily ritual. TikTok-friendly format ("pour in water and drink"). Bloom owned debloat + gut narrative.</dd>
+              <dt>한국 적용</dt><dd>한국 신바이오틱 stick은 mass (락토핏 등) saturated이지만 premium synbiotic + fiber + greens 통합 스틱은 부재. Pheeew 신바이오틱 stack이 유일.</dd>
+              <dt>디자인 방향</dt><dd>Pheeew 노란색 강한 KV. Daily ritual photography. Single-stick close-up.</dd>
+              <dt>채널</dt><dd>쿠팡 정기배송. TikTok Shop Korea. 자사몰. 편의점 (single-serve test).</dd>
+              <dt>차별점</dt><dd>Bloom의 분말 그린스가 신바이오틱 부재. Pheeew는 신바이오틱이 hero. 락토핏보다 premium synbiotic stack.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 03</span>
+              <h3>Pheeew Calm & Smile Gummies · 기능성 구미 (이미 컨셉화)</h3>
+              <div class="ko-name">L-Theanine + Vitamin B12 + Lemon Balm + Jujube + Saffron</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Olly Stress / Sleep</strong>, <strong>Lemme Calm</strong>, <strong>SmartyPants</strong>. Functional gummy category $2B+ in US.</dd>
+              <dt>미국에서 된 이유</dt><dd>Snack-like delivery removes supplement-pill barrier. Condition-specific (sleep, focus, stress) targeted. Female-skewed but mass.</dd>
+              <dt>한국 적용</dt><dd>한국 기능성 gummy 시장은 빠르게 성장 중이지만 brand-led premium 옵션이 부족. Pheeew의 brand asset이 직결.</dd>
+              <dt>디자인 방향</dt><dd>Already designed (Slide 206 in this folder): Pheeew 노란색 + green apple + clean nutritional. 3g sugar / 70 cal positioning.</dd>
+              <dt>채널</dt><dd>편의점. 쿠팡. 마켓컬리. 자사몰.</dd>
+              <dt>차별점</dt><dd>기존 한국 gummy brand (Cosmoman, Vitafusion 수입)이 갖지 못한 brand voice + 신바이오틱 친화 brand association.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== SO ============== -->
+      <section class="brand-block" id="so">
+        <div class="section-eyebrow"><span class="num">06.6</span><span>Sensitive Ones</span><span class="ko">민감한 사람들</span></div>
+        <div class="brand-card so">
+          <div class="brand-card-header">
+            <h2>Sensitive Ones · Function Map</h2>
+            <div class="brand-tag">Inner care · "(Function) + Support" 명명 · 감정 기반 · 민감성 framing · Evidence-led, gentle formulation</div>
+          </div>
+          <div class="brand-card-summary">SO's "민감/sensitive" framing is the spine. The "(Function) + Support" naming pattern can extend across many condition-specific supplement categories, as long as each one stays gentle in formulation, evidence-led in claim, and emotionally calm in voice. Skin Support is the existing anchor. Below is a 7-function expansion map that builds outward from Skin into the broader inner-care portfolio, organized in launch priority.</div>
+
+          <div class="brand-card-tier-header">Anchor · Skin Support</div>
+          <div class="concept" style="border-top: 1px solid var(--separator);">
+            <p style="font-size: 13px; color: var(--label-primary); line-height: 1.55; margin: 0;">Existing concept. 콜라겐 펩타이드 + 세라마이드 + 비타민 C with "민감 피부" framing. Differentiates from 콜라겐-saturated Korean inner beauty market via sensitive-skin specific stack. US precedent: Hum Nutrition, Vital Proteins, Moon Juice (inner beauty supplement $1B+ category). This is the brand's first product. Everything below extends naturally outward from this anchor and uses the same "(Function) + Support" naming convention.</p>
+          </div>
+
+          <div class="brand-card-tier-header">Tier 1 NEW · Launch first (2 functions)</div>
+          <div class="brand-card-tier-blurb">Most natural extensions from Skin Support. Female-skewed inner-care core, where the evidence is solid, the formulation is gentle, and the brand voice translates directly from the Skin Support work. These two move closest to the existing brand center of gravity.</div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Function 02 · Sleep Support</span>
+              <h3>SO Sleep Support · 민감 수면 케어</h3>
+              <div class="ko-name">마그네슘 글리시네이트 + L-테아닌 + 라벤더 + 0.3mg 멜라토닌 (KR-compliant)</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Olly Sleep</strong> (#1 sleep gummy US per market data). <strong>Calm Magnesium</strong> (Natural Vitality). <strong>Lemme Sleep</strong>. Sleep supplement category $1.5B+ in US.</dd>
+              <dt>미국에서 된 이유</dt><dd>Sleep anxiety crosses generations. Magnesium glycinate + L-theanine became the trusted gentle stack vs heavy melatonin doses. Snack-like delivery converts non-supplement-takers.</dd>
+              <dt>한국 적용</dt><dd>한국 수면 supplement은 melatonin 0.3mg OTC limit이라 시장이 좁다. 마그네슘 + L-테아닌 + 라벤더 stack은 사실상 비어 있다. SO의 "민감한 수면" framing이 자연스럽게 fit.</dd>
+              <dt>차별점</dt><dd>강제 졸음 유발 sleep aid이 아닌 자연스러운 진정. Generic Olly보다 sensitive-led 명확한 angle.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Function 03 · Cycle Support (PMS)</span>
+              <h3>SO Cycle Support · 민감 생리 주기 케어</h3>
+              <div class="ko-name">미오 이노시톨 + 체이스트베리 + B6 + 마그네슘 + 달맞이꽃 종자유</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Wile Women</strong>, <strong>Moody</strong>, <strong>Hum Hormone</strong>, <strong>Cycle Goddess</strong>. PMS / cycle supplement category $300M+ in US, growing fast. Female-founded brands dominant.</dd>
+              <dt>미국에서 된 이유</dt><dd>Cycle support is one of the most underserved-but-rapidly-growing female wellness categories. Myo-inositol + chasteberry + B6 has clinical data. Empathetic female-founder brand voice converts.</dd>
+              <dt>한국 적용</dt><dd>한국 PMS / 생리 주기 supplement은 거의 비어 있다 (달맞이꽃 종자유 단일 ingredient만 일부). 약국 처방 대신 daily supplement으로 cycle care를 소화하는 brand 부재. SO가 카테고리 owner가 될 수 있다.</dd>
+              <dt>차별점</dt><dd>한국에서 거의 unowned된 카테고리. 약국 처방 거부감 있는 20-30대 여성 직접 타겟. "민감한 주기" framing이 정확히 들어맞는다.</dd>
+            </dl>
+          </div>
+
+          <div class="brand-card-tier-header">Tier 2 NEW · Launch second (3 functions)</div>
+          <div class="brand-card-tier-blurb">Broader gentle-wellness territory. Each is evidence-supported and on-brand, but takes the brand beyond strict female-skewed inner care, so each requires internal alignment before commitment.</div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Function 04 · Stress Support</span>
+              <h3>SO Stress Support · 민감 스트레스 케어</h3>
+              <div class="ko-name">L-테아닌 + 아쉬와간다 (gentle dose) + B-complex + 로디올라</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Olly Goodbye Stress</strong>, <strong>Goldthread Adaptogens</strong>, <strong>Lemme Chill</strong>. Stress supplement category exploded post-pandemic.</dd>
+              <dt>미국에서 된 이유</dt><dd>Stress as supplement category exploded post-pandemic. Adaptogen framing converts non-supplement-takers. Gentle calm vs Adderall-style focus.</dd>
+              <dt>한국 적용</dt><dd>한국 스트레스 supplement은 신생 카테고리. SO의 "민감 스트레스" framing이 generic adaptogen brand와 구별된다. 약 거부 + 명상 미실천 사이에 있는 사람들 직접 타겟.</dd>
+              <dt>차별점</dt><dd>Sedative이 아닌 calm clarity. 카페인과 떨림에 민감한 사람 직접 타겟.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Function 05 · Gut Support (Sensitive Stomach)</span>
+              <h3>SO Gut Support · 민감 위장 케어</h3>
+              <div class="ko-name">소화 효소 + L-글루타민 + DGL + 슬리퍼리 엘름</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Just Thrive Digestive</strong>, <strong>Bonafide</strong>, <strong>Restore</strong>. Sensitive-stomach / IBS-prone supplement segment distinct from generic probiotic.</dd>
+              <dt>미국에서 된 이유</dt><dd>IBS-prone consumers (US 10-15%) want gentle non-prescription support. 식후 불편 / 가스 / 더부룩 specific. Distinct from preventive probiotic categories.</dd>
+              <dt>한국 적용</dt><dd>민감한 위장 (IBS 경향, 식후 불편) 한국인 많지만 약국용 외 supplement 옵션이 부족. SO가 sensitive-stomach 카테고리를 만들 수 있다.</dd>
+              <dt>차별점 vs Pheeew</dt><dd>Pheeew = 일반 wellness 장 건강 (preventive). SO Gut = 민감/증상 있는 사람 (symptomatic). 두 brand 사이 분명한 구별, 카니발리제이션 없음.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Function 06 · Mood Support</span>
+              <h3>SO Mood Support · 민감 기분 케어</h3>
+              <div class="ko-name">사프란 추출물 (30mg) + 오메가-3 + B-complex + 비타민 D</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Saffron-led</strong> products with placebo-controlled trial data, <strong>Lemme Chill</strong>, <strong>Olly Hello Happy</strong>.</dd>
+              <dt>미국에서 된 이유</dt><dd>Sub-clinical low mood is widespread but not depression. Saffron 30mg has placebo-controlled trial data for mood. Gentle non-pharma support category growing.</dd>
+              <dt>한국 적용</dt><dd>한국 mood supplement은 사실상 부재 (정신과 처방 외). 우울 의심하지만 약 거부하는 인구 많음. SO가 emotionally calm voice + 사프란 evidence-led 진입 가능.</dd>
+              <dt>차별점</dt><dd>Stress와 별개의 sustained mood 카테고리. 약 거부 + 명상 한계 있는 인구 직접 타겟.</dd>
+            </dl>
+          </div>
+
+          <div class="brand-card-tier-header">Tier 3 NEW · Launch later (2 functions)</div>
+          <div class="brand-card-tier-blurb">Add-ons to round out the system after Tier 1 and Tier 2 momentum builds. Less female-skewed, broader portfolio fit. Both expand the brand into adjacent demographics without breaking the sensitivity spine.</div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Function 07 · Focus Support</span>
+              <h3>SO Focus Support · 민감 집중력 케어</h3>
+              <div class="ko-name">L-테아닌 + 사자갈기버섯 + B12 + 시티콜린</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Magic Mind</strong>, <strong>Olly Laser Focus</strong>, lion's mane category leaders.</dd>
+              <dt>차별점</dt><dd>카페인에 민감한 (떨림, 불안) 사람들이 집중력 보조 원할 때. Stimulant 없는 nootropic stack. 일반 카페인 과다 supplement과 분명히 구별.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Function 08 · Immunity Support</span>
+              <h3>SO Immunity Support · 민감 면역력 케어</h3>
+              <div class="ko-name">비타민 C + 아연 (gentle dose) + 엘더베리 + 버섯 블렌드</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Beekeeper's Naturals</strong>, <strong>Garden of Life Immunity</strong>. Gentler vs Emergen-C category.</dd>
+              <dt>차별점</dt><dd>자주 잔병 걸리는 sensitive immune type. 고용량 비타민 C 거부감 있는 소비자 타겟. 위장 자극 없는 gentle dosing.</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="card callout-card"><div class="card-content">
+          <div class="callout-label">Brand Expansion Note · 브랜드 확장 노트</div>
+          <p>Tier 1 NEW (Sleep + Cycle) extends naturally from the existing Skin Support anchor and moves closest to the brand's center of gravity. Tier 2 and Tier 3 each warrant explicit brand-direction discussion before commitment, since every new function has SKU implications, marketing implications, and brand-positioning implications that extend the brand beyond its inner-beauty origin. At the master pipeline level, SO stays in Master Tier 3 until those brand-expansion conversations are settled.</p>
+        </div></div>
+      </section>
+
+      <!-- ============== SEQUENCING ============== -->
+      <section class="section" id="sequencing">
+        <div class="section-eyebrow"><span class="num">07</span><span>Sequencing</span><span class="ko">우선순위</span></div>
+        <h2>Sequencing</h2>
+        <p style="font-size: 14px; color: var(--label-primary); padding: 0 12px; margin-bottom: 14px; line-height: 1.55; max-width: 760px;">Launching all 17+ concepts at once would dilute every brand. The realistic move is to pick three or four concepts to push first, validate the playbook, and let the others follow as the foundation builds.</p>
+
+        <div class="tier-block">
+          <div class="tier-header"><span class="tier-num">Tier 01</span><span class="tier-title">Launch first · 3 concepts</span></div>
+          <div class="tier-content">
+            <p><strong>Bobsnu Phyto Trio (검은 슈퍼푸드 스틱).</strong> Bobsnu has the strongest 홈쇼핑 anchor and the easiest single-stick translation of Bloom Greens into Korean retail. The 약콩 헤리티지 carries the science story without requiring new R&D narrative.</p>
+            <p><strong>Daoom Daily 생식 Stick.</strong> Daoom's 38-year heritage is the moat. Single-SKU AG1 translation that nobody else in Korea can claim. 홈쇼핑 + 마켓컬리 + 자사몰 정기배송 fit. This is the cleanest premium positioning play in the portfolio.</p>
+            <p><strong>대학두유 Drinkable Soy Probiotic.</strong> Plant-based drinkable probiotic is an underserved Korean category dominated by dairy 락토핏. 대학두유's farmer-equity story, 평창 origin, and existing soymilk credibility give it a clean entry into a category that has no current owner. 편의점 first (직장인 아침 음료), 마켓컬리 second.</p>
+          </div>
+        </div>
+
+        <div class="tier-block">
+          <div class="tier-header"><span class="tier-num">Tier 02</span><span class="tier-title">Launch second · 3 concepts (after Tier 1 momentum)</span></div>
+          <div class="tier-content">
+            <p><strong>AVO Korean Wellness Shot Trio.</strong> Premium positioning, 편의점 viral, US transferable later. Wait for Tier 1 to fund and validate before launching this premium-tier risk.</p>
+            <p><strong>Pheeew RTD Synbiotic Soda.</strong> Wait until Pheeew US Phase 1 launches and the brand has its first wave of authority. Korean RTD launch becomes Phase 2 amplifier.</p>
+            <p><strong>Bobsnu Hair & Inside Care.</strong> 홈쇼핑 anchor product extension. Pairs naturally with existing 약콩샴푸 line.</p>
+          </div>
+        </div>
+
+        <div class="tier-block">
+          <div class="tier-header"><span class="tier-num">Tier 03</span><span class="tier-title">Launch later · after relationship matures</span></div>
+          <div class="tier-content">
+            <p>Daoom 한방 adaptogen, AVO Liposomal, AVO Korean Greens, AVO Tea Sticks, Pheeew Daily Stick, Pheeew Gummies, 대학두유 Functional Soy RTD, 대학두유 Soy Protein Bar, 대학두유 Barista Soy (B2B + retail), SO 7-function expansion (Sleep, Cycle, Stress, Gut, Mood, Focus, Immunity), Daoom Drinkable Meal.</p>
+            <p>None of the Tier 3 concepts are weak. They're sequenced behind Tier 1 and 2 because they require either more R&D, more channel work, or more brand prep before they can ship cleanly. The portfolio above gives us 3-5 years of pipeline if even half of these convert.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== SOURCES ============== -->
+      <section class="section" id="sources">
+        <div class="section-eyebrow"><span class="num">08</span><span>Sources</span><span class="ko">출처</span></div>
+        <h2>Sources & Citations</h2>
+        <div class="card"><div class="card-content">
+          <p>This document cites specific revenue, valuation, and market figures. All citations are listed below for verification. Where a figure is reported but not independently audited, we note that.</p>
+          <h3>US CPG market data</h3>
+          <ul>
+            <li><strong>Poppi → PepsiCo acquisition $1.95B, March 2025.</strong> CNBC, Bloomberg, Reuters (multiple confirming reports).</li>
+            <li><strong>AG1 $1.2B valuation, 2024.</strong> Forbes 2024 valuation reporting; PitchBook private market data.</li>
+            <li><strong>Olipop $850M reported revenue, 2024 / $1B+ valuation.</strong> Bloomberg industry coverage 2024; Olipop has not publicly disclosed audited revenue. Treat as reported, not audited.</li>
+            <li><strong>Bloom Nutrition $100M+ ARR via TikTok Shop, 2024.</strong> TikTok Shop case studies and industry reports. Bloom has not publicly disclosed audited revenue. Treat as reported.</li>
+            <li><strong>Magic Mind ~$20M+ revenue, 2024.</strong> TechCrunch and DTC industry reports. Reported, not audited.</li>
+            <li><strong>Owyn → PepsiCo acquisition, 2024.</strong> PepsiCo press release and Bloomberg coverage.</li>
+            <li><strong>RXBar → Kellogg's $600M acquisition, 2017.</strong> Kellogg's press release.</li>
+            <li><strong>Vital Proteins → Nestlé acquisition, 2020.</strong> Nestlé press release.</li>
+            <li><strong>Cymbiotika $100M+ revenue.</strong> Industry reporting; not audited.</li>
+            <li><strong>Wellness shot category $1B+ in US.</strong> Mintel and IRI industry category reports 2023-2024.</li>
+            <li><strong>Functional gummy category $2B+ in US.</strong> Nutrition Business Journal 2024.</li>
+            <li><strong>Inner beauty supplement $1B+ category US.</strong> Grand View Research and Mintel reports.</li>
+            <li><strong>Sleep supplement $1.5B+ US.</strong> NBJ Supplement Business Report 2024.</li>
+          </ul>
+          <h3>Korean market data</h3>
+          <ul>
+            <li><strong>락토핏 reported sales over ₩4,000억 (~$300M USD) annually.</strong> Chong Kun Dang annual reporting and industry estimates.</li>
+            <li><strong>Korean inner beauty market ₩1조+.</strong> Korea Health Functional Food Association annual report.</li>
+            <li><strong>홈쇼핑 industry ₩6조+ (~$4.5B USD).</strong> Korea Cable TV Association data.</li>
+            <li><strong>쿠팡 GMV ₩40조+ (~$30B USD).</strong> Coupang public earnings reports (NYSE: CPNG).</li>
+            <li><strong>Naver DataLab search trend data.</strong> Naver DataLab public search trends.</li>
+            <li><strong>Wegovy Korean launch Q4 2024.</strong> Korean Ministry of Food and Drug Safety; Novo Nordisk Korea announcements.</li>
+            <li><strong>Mounjaro Korean launch 2025.</strong> Eli Lilly Korea announcements.</li>
+            <li><strong>TikTok Shop Korea launched late 2025.</strong> TikTok Shop Korea announcements.</li>
+          </ul>
+          <h3>Caveats</h3>
+          <p>Several private US CPG brands cited in this document have not publicly disclosed audited financial figures. Where numbers are sourced from press reports rather than audited filings, we have flagged them as "reported." For internal strategic planning, treat all such figures as directional rather than precise. Korean market data is drawn from publicly available industry reports and government data, but should still be cross-verified before any commercial commitment is made.</p>
+          <p>For any specific figure that needs primary-source verification (for partnership conversations, financing discussions, or due diligence), the original source document can be pulled on request.</p>
+        </div></div>
+      </section>
+
+      <footer class="doc-footer">
+        <p>All Vital Organics · Strategic Document</p>
+        <p>Version 2.1 · April 27, 2026 · Alex Kim · 김승준</p>
+        <p>allvitalorganics.co</p>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  const searchInput = document.getElementById('searchInput');
+  const searchCount = document.getElementById('searchCount');
+  const searchNav = document.getElementById('searchNav');
+  const searchPrev = document.getElementById('searchPrev');
+  const searchNext = document.getElementById('searchNext');
+  const contentArea = document.querySelector('.content');
+  const sidebarLinks = document.querySelectorAll('.sidebar-item');
+
+  let currentMatches = [];
+  let currentMatchIndex = -1;
+  let searchTimeout = null;
+
+  // ---------- Search ----------
+  function clearHighlights() {
+    const marks = contentArea.querySelectorAll('mark.search-highlight');
+    marks.forEach(mark => {
+      const parent = mark.parentNode;
+      if (parent) {
+        parent.replaceChild(document.createTextNode(mark.textContent), mark);
+        parent.normalize();
+      }
+    });
+  }
+
+  function highlightText(query) {
+    const lowerQuery = query.toLowerCase();
+    const matches = [];
+
+    const walker = document.createTreeWalker(contentArea, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(node) {
+        if (!node.textContent || !node.textContent.trim()) return NodeFilter.FILTER_REJECT;
+        const parent = node.parentNode;
+        if (!parent) return NodeFilter.FILTER_REJECT;
+        const tag = (parent.tagName || '').toUpperCase();
+        if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'MARK') return NodeFilter.FILTER_REJECT;
+        if (parent.classList && parent.classList.contains('search-highlight')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+
+    const textNodes = [];
+    let node;
+    while ((node = walker.nextNode())) textNodes.push(node);
+
+    textNodes.forEach(textNode => {
+      const text = textNode.textContent;
+      const lowerText = text.toLowerCase();
+      if (!lowerText.includes(lowerQuery)) return;
+
+      const fragment = document.createDocumentFragment();
+      let lastIndex = 0;
+      let index = lowerText.indexOf(lowerQuery);
+
+      while (index !== -1) {
+        if (index > lastIndex) {
+          fragment.appendChild(document.createTextNode(text.substring(lastIndex, index)));
+        }
+        const mark = document.createElement('mark');
+        mark.className = 'search-highlight';
+        mark.textContent = text.substring(index, index + query.length);
+        fragment.appendChild(mark);
+        matches.push(mark);
+        lastIndex = index + query.length;
+        index = lowerText.indexOf(lowerQuery, lastIndex);
+      }
+      if (lastIndex < text.length) {
+        fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
+      }
+      if (textNode.parentNode) {
+        textNode.parentNode.replaceChild(fragment, textNode);
+      }
+    });
+
+    return matches;
+  }
+
+  function setCurrentMatch(index) {
+    currentMatches.forEach(m => m.classList.remove('current'));
+    if (index >= 0 && index < currentMatches.length) {
+      const mark = currentMatches[index];
+      mark.classList.add('current');
+      const markRect = mark.getBoundingClientRect();
+      const contentRect = contentArea.getBoundingClientRect();
+      const offsetTop = markRect.top - contentRect.top + contentArea.scrollTop;
+      contentArea.scrollTo({
+        top: offsetTop - contentArea.clientHeight / 2,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  function performSearch() {
+    const query = searchInput.value.trim();
+    clearHighlights();
+    currentMatches = [];
+    currentMatchIndex = -1;
+
+    if (!query || query.length < 1) {
+      searchCount.textContent = '';
+      searchNav.style.display = 'none';
+      return;
+    }
+
+    currentMatches = highlightText(query);
+
+    if (currentMatches.length === 0) {
+      searchCount.textContent = '0';
+      searchNav.style.display = 'none';
+      return;
+    }
+
+    currentMatchIndex = 0;
+    searchCount.textContent = `1 / ${currentMatches.length}`;
+    searchNav.style.display = 'flex';
+    setCurrentMatch(0);
+  }
+
+  function nextMatch() {
+    if (currentMatches.length === 0) return;
+    currentMatchIndex = (currentMatchIndex + 1) % currentMatches.length;
+    searchCount.textContent = `${currentMatchIndex + 1} / ${currentMatches.length}`;
+    setCurrentMatch(currentMatchIndex);
+  }
+
+  function prevMatch() {
+    if (currentMatches.length === 0) return;
+    currentMatchIndex = (currentMatchIndex - 1 + currentMatches.length) % currentMatches.length;
+    searchCount.textContent = `${currentMatchIndex + 1} / ${currentMatches.length}`;
+    setCurrentMatch(currentMatchIndex);
+  }
+
+  searchInput.addEventListener('input', () => {
+    if (searchTimeout) clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(performSearch, 180);
+  });
+
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (e.shiftKey) prevMatch();
+      else nextMatch();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      searchInput.value = '';
+      clearHighlights();
+      currentMatches = [];
+      currentMatchIndex = -1;
+      searchCount.textContent = '';
+      searchNav.style.display = 'none';
+      searchInput.blur();
+    }
+  });
+
+  searchNext.addEventListener('click', nextMatch);
+  searchPrev.addEventListener('click', prevMatch);
+
+  // Cmd+F / Ctrl+F focuses search bar (without blocking native fallback)
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'f') {
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+    }
+  });
+
+  // ---------- Sidebar smooth scroll within content ----------
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        const targetTop = target.offsetTop - 24;
+        contentArea.scrollTo({ top: targetTop, behavior: 'smooth' });
+        history.replaceState(null, '', href);
+      }
+    });
+  });
+
+  // ---------- Active sidebar tracking on scroll ----------
+  const sections = Array.from(document.querySelectorAll('section[id], .brand-block[id]'));
+
+  function updateActiveSidebar() {
+    const scrollTop = contentArea.scrollTop;
+    const offset = 80;
+    let activeId = sections.length ? sections[0].id : null;
+
+    for (let i = 0; i < sections.length; i++) {
+      if (sections[i].offsetTop - offset <= scrollTop) {
+        activeId = sections[i].id;
+      } else {
+        break;
+      }
+    }
+
+    sidebarLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href === '#' + activeId) link.classList.add('active');
+      else link.classList.remove('active');
+    });
+  }
+
+  let scrollRaf = null;
+  contentArea.addEventListener('scroll', () => {
+    if (scrollRaf) return;
+    scrollRaf = requestAnimationFrame(() => {
+      updateActiveSidebar();
+      scrollRaf = null;
+    });
+  });
+
+  updateActiveSidebar();
+})();
+</script>
+
+</body>
+</html>
