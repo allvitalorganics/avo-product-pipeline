@@ -250,6 +250,25 @@
     box-shadow: 0 0 0 0.5px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.15);
   }
 
+  /* Bilingual toggle */
+  .lang-ko { display: none; }
+  body.lang-mode-ko .lang-en { display: none; }
+  body.lang-mode-ko .lang-ko { display: block; }
+  body.lang-mode-ko span.lang-ko, body.lang-mode-ko dt.lang-ko, body.lang-mode-ko dd.lang-ko { display: inline; }
+  body.lang-mode-ko span.lang-en { display: none; }
+  body.lang-mode-ko h1.lang-ko, body.lang-mode-ko h2.lang-ko, body.lang-mode-ko h3.lang-ko { display: block; }
+  #langToggle {
+    min-width: 40px;
+    padding: 0 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  body.lang-mode-ko #langToggle {
+    background: var(--tint);
+    color: white;
+  }
+
   /* ============================================
      Split view
      ============================================ */
@@ -803,6 +822,7 @@
       </div>
     </div>
     <div class="tb-spacer"></div>
+    <button id="langToggle" class="tb-button" aria-label="Toggle language" title="한국어 / English">한국어</button>
     <button class="tb-button" aria-label="Share">⬆</button>
     <button class="tb-button" aria-label="View">⊞</button>
   </div>
@@ -845,8 +865,10 @@
         <div class="doc-eyebrow">All Vital Organics · Strategic Document</div>
         <h1>Product Concept Pipeline</h1>
         <p class="doc-subtitle">5개 브랜드 · 미국-한국 제품 컨셉 변환 프레임워크</p>
-        <p class="doc-lede">This document maps a sustainable product launch pipeline across the five brands AVO operates or partners on, using a US-to-Korea translation frame to identify what comes next, and where each concept fits.</p>
-        <p class="doc-lede">Each brand below has its own identity, audience, and natural product range. The document organizes the thinking behind what each brand can carry next, with research-backed market context for every concept.</p>
+        <p class="doc-lede lang-en">This document maps a sustainable product launch pipeline across the five brands AVO operates or partners on, using a US-to-Korea translation frame to identify what comes next, and where each concept fits.</p>
+        <p class="doc-lede lang-ko">본 문서는 AVO가 운영하거나 협업하는 5개 브랜드에 걸쳐 지속 가능한 제품 출시 파이프라인을 정리한다. 미국-한국 변환 프레임을 적용해 다음에 만들 제품과 각 컨셉이 어디에 들어맞는지 규명한다.</p>
+        <p class="doc-lede lang-en">Each brand below has its own identity, audience, and natural product range. The document organizes the thinking behind what each brand can carry next, with research-backed market context for every concept.</p>
+        <p class="doc-lede lang-ko">각 브랜드는 고유의 정체성, 청중, 자연스러운 제품 범위를 가지고 있다. 본 문서는 각 브랜드가 다음에 어떤 제품을 운영할 수 있는지를 정리하며, 모든 컨셉에 리서치 기반 시장 맥락을 곁들였다.</p>
         <div class="doc-meta">
           <div class="doc-meta-item"><strong>Publisher</strong> All Vital Organics</div>
           <div class="doc-meta-item"><strong>Author</strong> Alex Kim · 김승준</div>
@@ -860,9 +882,12 @@
         <div class="section-eyebrow"><span class="num">01</span><span>Mandate</span><span class="ko">임무</span></div>
         <h2>Mandate</h2>
         <div class="card"><div class="card-content">
-          <p>The strategic question this document answers is simple: <strong>across the five brands AVO operates or partners on, what products should be built next, and why those?</strong> Not a wish list, not a brainstorm, but a research-grounded pipeline.</p>
-          <p>The premise: <strong>US CPG products that have crossed a credibility threshold can often be translated to Korea profitably, if the brand fit is right and the translation accounts for Korean retail and consumer reality.</strong> The four-step translation frame (미국에서 된 이유 → 한국 적용 → 디자인 방향 → 채널 전략) is the spine of every product concept below.</p>
-          <p>This is not a proposal in the formal sense. It's a structured menu, not a contract. Each concept is a place a brand could go, not a commitment that it will.</p>
+          <p class="lang-en">The strategic question this document answers is simple: <strong>across the five brands AVO operates or partners on, what products should be built next, and why those?</strong> Not a wish list, not a brainstorm, but a research-grounded pipeline.</p>
+          <p class="lang-ko">본 문서가 답하는 전략적 질문은 단순하다: <strong>AVO가 운영하거나 협업하는 5개 브랜드 전체에서, 다음에 어떤 제품을 만들어야 하며, 왜 그것이어야 하는가?</strong> 위시리스트나 브레인스토밍이 아닌, 리서치 기반 파이프라인이다.</p>
+          <p class="lang-en">The premise: <strong>US CPG products that have crossed a credibility threshold can often be translated to Korea profitably, if the brand fit is right and the translation accounts for Korean retail and consumer reality.</strong> The four-step translation frame (미국에서 된 이유 → 한국 적용 → 디자인 방향 → 채널 전략) is the spine of every product concept below.</p>
+          <p class="lang-ko">전제는 다음과 같다: <strong>신뢰성을 확보한 미국 CPG 제품은, 브랜드 적합성이 맞고 한국 유통·소비 현실을 반영해 변환할 경우, 한국에서 수익성 있게 옮길 수 있다.</strong> 4단계 변환 프레임(미국에서 된 이유 → 한국 적용 → 디자인 방향 → 채널 전략)이 아래 모든 제품 컨셉의 기반이다.</p>
+          <p class="lang-en">This is not a proposal in the formal sense. It's a structured menu, not a contract. Each concept is a place a brand could go, not a commitment that it will.</p>
+          <p class="lang-ko">이 문서는 형식적 의미의 제안서가 아니다. 계약이 아니라 구조화된 메뉴다. 각 컨셉은 브랜드가 갈 수 있는 자리이지, 반드시 가야 한다는 약속이 아니다.</p>
         </div></div>
         <div class="card callout-card"><div class="card-content">
           <div class="callout-label">Methodology · 방법론</div>
@@ -988,32 +1013,32 @@
           <div class="concept">
             <div class="concept-header">
               <span class="concept-badge">Concept 02</span>
-              <h3>Bobsnu Phyto Daily · 매일 마시는 phytochemical</h3>
-              <div class="ko-name">파이토 데일리 RTD · 검은 슈퍼푸드 음료</div>
+              <h3>Bobsnu Phyto100 RTD · 파이토100 마시는 버전</h3>
+              <div class="ko-name">기존 Phyto100 라인의 RTD 확장 · daily liquid 진화</div>
             </div>
             <dl class="concept-frame">
-              <dt>US Precedent</dt><dd><strong>MUD\WTR</strong> (mushroom adaptogen daily, ~$30M+ revenue 2024). <strong>Four Sigmatic</strong>. <strong>Athletic Greens RTD line</strong>. Daily ritual functional drink as coffee alternative.</dd>
-              <dt>미국에서 된 이유</dt><dd>Wellness consumers want a daily functional ritual that is not coffee. Adaptogen framing converts both health-conscious and burnout audiences. Premium pricing on a daily SKU.</dd>
-              <dt>한국 적용</dt><dd>Korea has 한방차, 검은콩차 heritage but no premium daily ritual product. 약콩 + 검은참깨 + 흑미 + 한방 mild adaptogen. Single-serve stick or RTD bottle.</dd>
-              <dt>디자인 방향</dt><dd>검은 / 갈색 무광 패키지. 약콩 일러스트. 한자 + 한글 typography. Premium serif. Daily ritual photography.</dd>
-              <dt>채널</dt><dd>마켓컬리 (premium morning ritual). 자사몰. 쿠팡. 편의점 (single-serve stick variant).</dd>
-              <dt>차별점</dt><dd>기존 Bobsnu 약콩차의 premium ritualized 진화. 미국 MUD\WTR이 가지지 못한 한국 헤리티지 깊이.</dd>
+              <dt>US Precedent</dt><dd><strong>Athletic Greens AG1 RTD line</strong>. <strong>Olipop / Poppi</strong> pouch + can SKU extensions. <strong>Recess</strong>. The line-extension playbook is well-validated when an anchor brand asset already exists.</dd>
+              <dt>미국에서 된 이유</dt><dd>Existing brand asset reduces cold-start risk dramatically. Liquid form converts capsule and powder skeptics. Premium positioning carries over from anchor SKU. SKU ladder grows without new brand investment.</dd>
+              <dt>한국 적용</dt><dd>Phyto100 already has 홈쇼핑 anchor (4월 25일 첫 방송). Adding the drinkable RTD format extends the SKU ladder without diluting brand. 정기배송 friendly, on-the-go consumer. capsule 거부감 있는 소비자 직접 흡수.</dd>
+              <dt>디자인 방향</dt><dd>기존 Phyto100 brand assets + 약콩 photography. Glass bottle premium. Same brand voice, drinkable format cue.</dd>
+              <dt>채널</dt><dd>홈쇼핑 (Phyto100 정기배송 add-on). 자사몰 bundling. 마켓컬리. 편의점 single-serve test.</dd>
+              <dt>차별점</dt><dd>Phyto100의 daily liquid 진화. 별도 브랜드 신설 risk 없이 brand asset 확장. capsule + 분말 + RTD 3종 라인.</dd>
             </dl>
           </div>
 
           <div class="concept">
             <div class="concept-header">
               <span class="concept-badge">Concept 03</span>
-              <h3>Bobsnu Phyto Trio · 검은 슈퍼푸드 분말 스틱</h3>
-              <div class="ko-name">검은 phytochemical 3종 (약콩 + 검은참깨 + 흑미) 스틱</div>
+              <h3>Bobsnu 약콩 Single-Hero Stick · 약콩 단일 고함량 스틱</h3>
+              <div class="ko-name">약콩 phytochemical 고함량 single-ingredient daily stick</div>
             </div>
             <dl class="concept-frame">
-              <dt>US Precedent</dt><dd><strong>Bloom Nutrition Greens</strong> ($100M+ ARR, TikTok Shop dominance 2024). <strong>Grüns</strong>. <strong>AG1</strong>. Daily greens stick as TikTok-viral category.</dd>
-              <dt>미국에서 된 이유</dt><dd>Stick-format daily greens converted skeptics through social proof and visible-effect storytelling on TikTok. Bloom proved condition-specific (gut, debloat, energy) variants drive subscription.</dd>
-              <dt>한국 적용</dt><dd>Korea has 미숫가루, 선식 traditional but no modern premium stick format that owns the category. 약콩-led "검은 슈퍼푸드 트리오" with phytochemical positioning.</dd>
-              <dt>디자인 방향</dt><dd>검은 무광 + 골드 디테일. 단일 스틱 강한 KV. 영양 인포그래픽. Premium science feel mixed with heritage authority.</dd>
-              <dt>채널</dt><dd>홈쇼핑 정기배송 (한 줄 약속: 매일 검은 슈퍼푸드). TikTok Shop Korea (viral). 자사몰 정기.</dd>
-              <dt>차별점</dt><dd>미국 Bloom의 "녹색" 대신 한국이 신뢰하는 "검은색" superfood. 단일 SKU 프리미엄 단순화.</dd>
+              <dt>US Precedent</dt><dd><strong>Magic Mind</strong> (single-hero L-theanine + matcha shot, ~$20M+ revenue 2024). <strong>Liquid I.V.</strong>. <strong>Cymbiotika single-ingredient lines</strong>. Single-hero ingredient brands command stronger positioning than multi-blend.</dd>
+              <dt>미국에서 된 이유</dt><dd>Single-hero ingredient + premium science = clear positioning. Easier to communicate, easier to remember, easier to recommend. Premium pricing justified by concentration and source.</dd>
+              <dt>한국 적용</dt><dd>한국 supplement 시장은 multi-blend 위주 (락토핏, 종합비타민). Single-hero premium positioning은 차별화 강력. 약콩 phytochemical extract 고함량 single-stick. 서울대 이기원 교수 연구 데이터가 신뢰 기반.</dd>
+              <dt>디자인 방향</dt><dd>Minimalist single-ingredient packaging. 약콩 단일 사진 + 연구 데이터 일러스트. Premium science feel. Black + cream Bobsnu identity.</dd>
+              <dt>채널</dt><dd>자사몰 정기배송. 쿠팡. 마켓컬리. 약사 추천 채널 가능.</dd>
+              <dt>차별점</dt><dd>락토핏의 multi-strain blend과 분명히 구별되는 single-hero 약콩 high-concentration. 서울대 phytochemical IP가 진입장벽. 기존 Bobsnu 생식과도 카니발리제이션 없음 (생식 = multi-grain, 이건 single-hero).</dd>
             </dl>
           </div>
         </div>
@@ -1027,7 +1052,7 @@
             <h2>다움 · Daoom</h2>
             <div class="brand-tag">1988년 창립 · 38년 가업 · 김수경 박사 · 한국 최초 생식 발명 · 3대 가업</div>
           </div>
-          <div class="brand-card-summary">Daoom's moat is heritage. 38 years, 김수경 박사, the inventor of 생식 in Korea. The brand has natural authority that no startup can buy. Product range can extend from 생식 into raw-ingredient-based supplement powders, premium 한방 adaptogens, and traditional-meets-modern wellness, but should never stray from the "healing through food" thesis.</div>
+          <div class="brand-card-summary">Daoom's moat is heritage. 38 years, 김수경 박사, the inventor of 생식 in Korea. The brand has natural authority that no startup can buy. Product strategy is to <strong>deepen 생식, not broaden beyond it</strong>. Each concept extends the 생식 spine through new formats (stick, RTD) rather than reaching into adjacent categories that dilute the heritage.</div>
 
           <div class="concept">
             <div class="concept-header">
@@ -1041,39 +1066,23 @@
               <dt>한국 적용</dt><dd>한국에는 미숫가루, 선식 전통이 있지만 현대화된 premium daily 생식 product가 없다. Daoom의 38년 헤리티지가 정확히 이 자리에 들어맞는다. AG1 like single-SKU, single-benefit, single-stick.</dd>
               <dt>디자인 방향</dt><dd>Modern 한지 텍스처 + 김수경 박사 sign + science-backed nutritional infographic. 38년 헤리티지 mark prominently. Earth-tone palette.</dd>
               <dt>채널</dt><dd>홈쇼핑 1차 (38년 가업 + 한국 최초 생식 스토리 강력). 마켓컬리. 자사몰 정기배송.</dd>
-              <dt>차별점</dt><dd>한국 최초 생식 발명자가 만든 modern daily 생식. 미국 AG1이 흉내낼 수 없는 진짜 헤리티지.</dd>
+              <dt>차별점</dt><dd>한국 최초 생식 발명자가 만든 modern daily 생식. 미국 AG1이 흉내낼 수 없는 진짜 헤리티지. <strong>Daoom의 flagship 제품.</strong></dd>
             </dl>
           </div>
 
           <div class="concept">
             <div class="concept-header">
               <span class="concept-badge">Concept 02</span>
-              <h3>Daoom 한방 Adaptogen Powder · 한방 어댑토겐 분말</h3>
-              <div class="ko-name">홍삼·황기·당귀 어댑토겐 데일리 파우더</div>
+              <h3>Daoom 생식 RTD · 마시는 생식</h3>
+              <div class="ko-name">38년 생식의 마실 수 있는 진화 · 일상 ritual format</div>
             </div>
             <dl class="concept-frame">
-              <dt>US Precedent</dt><dd><strong>Sun Potion</strong>, <strong>Anima Mundi</strong>, <strong>Moon Juice</strong> (premium adaptogen powder, $40-80 per jar). Niche but high-LTV.</dd>
-              <dt>미국에서 된 이유</dt><dd>Adaptogen framing for stress and burnout. Premium pricing on traditional Eastern ingredients repackaged for Western wellness audience. Subscription friendly.</dd>
-              <dt>한국 적용</dt><dd>한국에는 한방 정통이 있지만 모던 패키징 + daily ritual format으로 정리된 product가 부족. Daoom의 healing-through-food 신념과 직결.</dd>
-              <dt>디자인 방향</dt><dd>한지 + 묵 + 약재 일러스트. 38년 헤리티지 + 김수경 박사 추천 도장. Premium glass jar OR refillable pouch.</dd>
-              <dt>채널</dt><dd>마켓컬리 (premium). 자사몰. 마켓컬리 → 쿠팡 ladder.</dd>
-              <dt>차별점</dt><dd>미국 어댑토겐 브랜드가 한국 한방을 흉내내지만, Daoom은 한국에서 38년 한방 진짜를 한다.</dd>
-            </dl>
-          </div>
-
-          <div class="concept">
-            <div class="concept-header">
-              <span class="concept-badge">Concept 03</span>
-              <h3>Daoom 식사 대용 RTD · 생식 마시는 식사</h3>
-              <div class="ko-name">Daoom Drinkable Meal · 생식 RTD 한 끼</div>
-            </div>
-            <dl class="concept-frame">
-              <dt>US Precedent</dt><dd><strong>Huel RTD</strong> (~$200M+ revenue 2024 reported). <strong>Soylent</strong>. <strong>Kachava</strong>. Drinkable meal-replacement category.</dd>
-              <dt>미국에서 된 이유</dt><dd>Time-poor wellness consumers want a complete meal in a bottle. Plant-based, low-sugar, nutrient-complete. Office worker daily lunch replacement.</dd>
-              <dt>한국 적용</dt><dd>한국에서 식사 대용 카테고리는 빠르게 성장 중 (단백질 RTD, 제로 칼로리 RTD). 다움의 생식 헤리티지가 가장 자연스러운 진입점.</dd>
-              <dt>디자인 방향</dt><dd>Modern bottle + heritage label. 영양 정보 강한 디자인. 직장인 daily lunch 컨텍스트.</dd>
-              <dt>채널</dt><dd>편의점 (직장인 점심). 마켓컬리. 쿠팡.</dd>
-              <dt>차별점</dt><dd>서양식 meal-replacement이 아닌 "한국 생식의 마실 수 있는 진화."</dd>
+              <dt>US Precedent</dt><dd><strong>Huel RTD</strong> (~$200M+ revenue 2024 reported). <strong>Soylent</strong>. <strong>Kachava</strong>. Drinkable nutrition category. <em>Note: AVO positions this NOT as meal-replacement (Huel/Soylent angle) but as 생식's drinkable evolution — different mental category, premium not utilitarian.</em></dd>
+              <dt>미국에서 된 이유</dt><dd>Drinkable nutrition for time-poor consumers. Plant-based, low-sugar, nutrient-complete. Daily ritual format reduces friction.</dd>
+              <dt>한국 적용</dt><dd>한국에서 단백질 RTD는 폭발적 성장 중이지만 prestige + heritage 진입은 비어 있다. Daoom 생식의 마실 수 있는 진화 = unique. 분말 생식 거부감 있는 직장인이 자연스럽게 마시는 ritual.</dd>
+              <dt>디자인 방향</dt><dd>Modern glass bottle + 한지 라벨. 38년 헤리티지 + 김수경 박사 sign 작게. 영양 정보 강한 라벨. 일상 ritual photography (아침 책상, 통근 가방).</dd>
+              <dt>채널</dt><dd>마켓컬리 1차 (premium daily ritual). 자사몰. 편의점 (직장인 아침 / 점심).</dd>
+              <dt>차별점</dt><dd>서양 meal-replacement이 아닌 "한국 생식의 마실 수 있는 진화." Concept 01 (스틱)과 sister product 관계, 가족 단위 / 다양한 ritual 커버.</dd>
             </dl>
           </div>
         </div>
@@ -1108,38 +1117,6 @@
           <div class="concept">
             <div class="concept-header">
               <span class="concept-badge">Concept 02</span>
-              <h3>대학두유 Drinkable Soy Probiotic · 발효 두유 RTD</h3>
-              <div class="ko-name">발효 두유 + 식물성 프로바이오틱 + 단백질 마실 수 있는 요거트</div>
-            </div>
-            <dl class="concept-frame">
-              <dt>US Precedent</dt><dd><strong>Forager Project</strong> (cashew-based drinkable yogurt, $50M+ reported revenue). <strong>Bored Cow</strong>. <strong>Lifeway Kefir</strong>. Plant-based drinkable probiotic category $500M+ in US.</dd>
-              <dt>미국에서 된 이유</dt><dd>Lactose-intolerant + plant-curious consumers want gut benefit without dairy. Drinkable yogurt format wins on convenience. Probiotic claim translates premium pricing without requiring supplement identity.</dd>
-              <dt>한국 적용</dt><dd>한국 발효 두유 (콩물, 쉰두유) 전통이 있지만 modern drinkable probiotic 형태로 packaged된 brand가 부재. 대학두유의 평창 콩 + 발효 R&D 결합 가능. 매일유업 식물성 라인의 농가 답.</dd>
-              <dt>디자인 방향</dt><dd>농가 + 발효 항아리 일러스트. CFU 수치 + 식물성 단백질 라벨 강력. Modern but rooted bottle.</dd>
-              <dt>채널</dt><dd>편의점 (직장인 아침 음료). 마켓컬리. 쿠팡 정기배송.</dd>
-              <dt>차별점</dt><dd>유산균 음료 시장은 락토핏 dominant이지만 plant-based 두유 발효 segment는 비어 있다. 동물성 dairy에 민감한 소비자 직접 타겟.</dd>
-            </dl>
-          </div>
-
-          <div class="concept">
-            <div class="concept-header">
-              <span class="concept-badge">Concept 03</span>
-              <h3>대학두유 단백질 바 · 평창 콩 단백질 스낵</h3>
-              <div class="ko-name">대학두유 Soy Protein Bar · 한국 단백질 바의 농가 답</div>
-            </div>
-            <dl class="concept-frame">
-              <dt>US Precedent</dt><dd><strong>Quest</strong>, <strong>RXBar</strong> (Kellogg's $600M acquisition), <strong>GoMacro</strong>. Protein bar category remains $7B+ in US.</dd>
-              <dt>미국에서 된 이유</dt><dd>Convenient protein delivery, clean ingredient story (RXBar's "no BS" labeling). Snackification of nutrition.</dd>
-              <dt>한국 적용</dt><dd>한국 단백질 바 시장은 myProtein, 그래놀라 dominant이지만 농가 + heritage story bar가 부재. 평창 콩 + low-sugar + 식이섬유.</dd>
-              <dt>디자인 방향</dt><dd>RXBar식 깨끗한 ingredient labeling. 농가 photography. Modern but earnest.</dd>
-              <dt>채널</dt><dd>편의점 (직장인 스낵). 쿠팡. 마켓컬리.</dd>
-              <dt>차별점</dt><dd>서양 단백질 바가 흉내 못하는 농가 공동 소유 + 평창 청정지역 story.</dd>
-            </dl>
-          </div>
-
-          <div class="concept">
-            <div class="concept-header">
-              <span class="concept-badge">Concept 04</span>
               <h3>대학두유 Barista Soy · 카페용 프리미엄 두유</h3>
               <div class="ko-name">바리스타 등급 두유 · B2B 카페 + B2C retail 양 라인</div>
             </div>
@@ -1150,6 +1127,22 @@
               <dt>디자인 방향</dt><dd>Café-friendly 1L portion + 200mL retail 두 종. Minimal modern label. 농가 sign small. Barista certification badge.</dd>
               <dt>채널</dt><dd>B2B 스페셜티 카페 입점 1차 (블루보틀 + 펠트 + 개인 로스터리). 마켓컬리. 자사몰. B2B 인지도가 retail 견인.</dd>
               <dt>차별점</dt><dd>Oatly가 갖지 못한 한국 농가 stake holding + 평창 origin story. 매일유업 두유보다 분명한 specialty premium positioning.</dd>
+            </dl>
+          </div>
+
+          <div class="concept">
+            <div class="concept-header">
+              <span class="concept-badge">Concept 03</span>
+              <h3>대학두유 Heritage Flavored Soymilk · 한국 헤리티지 곡물 두유 라인</h3>
+              <div class="ko-name">흑임자 · 호두 · 검은쌀 · 단호박 헤리티지 두유 RTD 라인</div>
+            </div>
+            <dl class="concept-frame">
+              <dt>US Precedent</dt><dd><strong>Califia Farms</strong> flavored line. <strong>Silk variants</strong>. <strong>Oatly Chocolate / Vanilla</strong>. Flavored plant-milk drives shelf variety and repeat purchase. Flavor extension is the cleanest SKU multiplier in the plant-milk category.</dd>
+              <dt>미국에서 된 이유</dt><dd>Flavored variants extend SKU ladder without R&D risk. Same supply chain, different flavor compounds. Repeat purchase driven by variety, not new ingredient discovery.</dd>
+              <dt>한국 적용</dt><dd>한국 두유 시장 (매일유업, 정식품) flavors are limited (검은콩, 단호박 only). 헤리티지 한국 곡물 (흑임자, 호두, 검은쌀, 잣) 활용한 premium flavored line은 비어 있다. 농가 곡물 직거래 stories per flavor.</dd>
+              <dt>디자인 방향</dt><dd>농가 + 곡물 일러스트 per flavor. Color-coded line per SKU. Modern but rooted. Premium glass + minimal label.</dd>
+              <dt>채널</dt><dd>마켓컬리 (premium variety). 쿠팡. 편의점 (single-serve flavor variants).</dd>
+              <dt>차별점</dt><dd>매일유업 flavored 두유 (mass commodity) 대비 premium positioning + 농가 owned story + 한국 헤리티지 곡물. 두유 코어를 떠나지 않으면서 SKU 다양화.</dd>
             </dl>
           </div>
         </div>
@@ -1163,7 +1156,7 @@
             <h2>AVO · All Vital Organics</h2>
             <div class="brand-tag">Daoom 헤리티지 현대화 · Raw whole food + healing · 미국 시장 지향 (장기) · 20-30대 premium</div>
           </div>
-          <div class="brand-card-summary">AVO is the brand we're building for the next 10 years of US-facing premium wellness. It modernizes Daoom's heritage but speaks to a younger, globally-minded audience. Brand can carry premium adaptogens, wellness shots, liposomal supplements, premium tea, and Korean-rooted superfood products that read clean to a US consumer. Should not become a price-fighter brand.</div>
+          <div class="brand-card-summary">AVO is the brand we're building for the next 10 years of US-facing premium wellness. It modernizes Daoom's heritage but speaks to a younger, globally-minded audience. Brand can carry premium wellness shots, 한방 adaptogen formats, daily functional drinks, and liposomal premium supplements. Stays in supplement and functional drink categories — does not stretch into tea (오설록 territory) or daily greens (Daoom territory).</div>
 
           <div class="concept">
             <div class="concept-header">
@@ -1184,48 +1177,48 @@
           <div class="concept">
             <div class="concept-header">
               <span class="concept-badge">Concept 02</span>
-              <h3>AVO Premium Liposomal · 리포소말 비타민 라인</h3>
-              <div class="ko-name">고흡수 리포소말 비타민 C · 글루타치온 · 마그네슘 라인</div>
+              <h3>AVO 한방 Adaptogen Daily Stick · 한방 어댑토겐 데일리 스틱</h3>
+              <div class="ko-name">홍삼 · 황기 · 당귀 · 영지 · 한방 어댑토겐 데일리 single-stick</div>
             </div>
             <dl class="concept-frame">
-              <dt>US Precedent</dt><dd><strong>Cymbiotika</strong> ($100M+ revenue reported, premium liposomal). <strong>Quicksilver Scientific</strong>. <strong>Pure Encapsulations</strong>. Premium supplement segment $40-90 per bottle.</dd>
-              <dt>미국에서 된 이유</dt><dd>Bioavailability story (liposomal absorption 5-10x higher than capsule). Premium pricing justified by science. Educational marketing converts skeptics into subscribers.</dd>
-              <dt>한국 적용</dt><dd>한국 리포소말 supplement 시장은 거의 비어 있다. 일부 수입품만 존재. AVO가 한국 자체 개발 리포소말 라인을 출시하면 카테고리 owner가 될 수 있다.</dd>
-              <dt>디자인 방향</dt><dd>병원-quality clinical typography + 한방 헤리티지 mark. Premium glass dropper bottle. Educational packaging (흡수율 비교 그래프).</dd>
-              <dt>채널</dt><dd>자사몰 only (premium positioning protect). 마켓컬리. 약사 추천 채널.</dd>
-              <dt>차별점</dt><dd>한국 자체 R&D 리포소말 + 다움 헤리티지 = Cymbiotika가 갖지 못한 동양 의학 기반의 premium science.</dd>
+              <dt>US Precedent</dt><dd><strong>Sun Potion</strong>, <strong>Anima Mundi</strong>, <strong>Moon Juice</strong> (premium adaptogen, $40-80 per jar). <strong>MUD\WTR</strong> (mushroom adaptogen daily, ~$30M+ revenue 2024). Premium adaptogen daily ritual category.</dd>
+              <dt>미국에서 된 이유</dt><dd>Adaptogen framing for stress and burnout in a wellness-saturated market. Premium pricing on traditional Eastern ingredients repackaged for younger Western audience. Daily ritual locks in subscription LTV.</dd>
+              <dt>한국 적용</dt><dd>한국 한방은 정통이 강하지만 모던 패키징 + daily stick format으로 정리된 brand가 비어 있다. AVO modernizes 한방 ingredients (홍삼, 황기, 당귀, 영지) into premium daily stick for younger MZ consumer. Daoom의 생식 spine과 분명히 구별 (생식 = multi-grain food, 한방 = adaptogen herb).</dd>
+              <dt>디자인 방향</dt><dd>Premium minimalist + 한방 일러스트. Earth + gold accents. Modern stick packaging. Clinical-but-warm typography.</dd>
+              <dt>채널</dt><dd>마켓컬리 1차 (premium morning ritual). 자사몰 정기배송. 쿠팡. 미국 진출 시 transferable.</dd>
+              <dt>차별점</dt><dd>미국 어댑토겐 brand가 흉내내는 동양 한방을 정통으로 가진 AVO + 모던 패키징. Daoom 생식과 카테고리 분리: Daoom = 식사 / 영양, AVO = 한방 / 컨디션.</dd>
             </dl>
           </div>
 
           <div class="concept">
             <div class="concept-header">
               <span class="concept-badge">Concept 03</span>
-              <h3>AVO Korean Greens · 한국 슈퍼푸드 데일리 파우더</h3>
-              <div class="ko-name">인삼 + 매실 + 흑마늘 + 적포도 · 데일리 한국식 그린스</div>
+              <h3>AVO Functional Drink RTD · 한방 데일리 functional 음료</h3>
+              <div class="ko-name">한방 + 어댑토겐 + 식물성 daily functional RTD</div>
             </div>
             <dl class="concept-frame">
-              <dt>US Precedent</dt><dd><strong>AG1</strong>, <strong>Bloom Greens</strong>, <strong>Grüns</strong>. Daily greens powder $45-100 per month subscription.</dd>
-              <dt>미국에서 된 이유</dt><dd>Single-product daily ritual. Removes choice fatigue. Subscription-native. Bloom proved condition-specific variants (debloat, energy) drive retention.</dd>
-              <dt>한국 적용</dt><dd>한국 슈퍼푸드 (인삼, 매실, 흑마늘) + Daoom 생식 헤리티지로 만든 한국식 daily greens. AG1가 갖지 못한 동양 슈퍼푸드 정통성.</dd>
-              <dt>디자인 방향</dt><dd>Earth-tone + 인삼 일러스트. 다움 38년 헤리티지 mark. Premium science feel.</dd>
-              <dt>채널</dt><dd>자사몰 정기배송. 마켓컬리. 미국 진출 후 Whole Foods.</dd>
-              <dt>차별점</dt><dd>미국 daily greens가 흉내내는 동양 슈퍼푸드를 진짜 한국 헤리티지로 만든 카테고리 owner.</dd>
+              <dt>US Precedent</dt><dd><strong>Recess</strong> (CBD/adaptogen drink, premium functional). <strong>Cadence</strong>. <strong>OFFLINE Energy</strong>. Premium functional drink category — subtler than wellness shot, more sustained than coffee or energy drink.</dd>
+              <dt>미국에서 된 이유</dt><dd>Functional drink as everyday wellness ritual. Subtler than shot (smaller commitment), more sustained than coffee (less crash). Bridges wellness and daily beverage occasions.</dd>
+              <dt>한국 적용</dt><dd>한국 functional drink 시장은 RTD 커피 + 제로칼로리 탄산 양극화. Premium daily wellness drink (한방 + 어댑토겐 + 식물성)는 비어 있다. AVO Concept 02의 sister product, daily ritual의 음료 버전.</dd>
+              <dt>디자인 방향</dt><dd>Premium can or bottle. Minimal label, 한방 일러스트 subtle. Color-coded variants (calm / clarity / energy).</dd>
+              <dt>채널</dt><dd>마켓컬리. 편의점 (premium MZ shelf). 자사몰. 카페 컬래버 가능.</dd>
+              <dt>차별점</dt><dd>일반 functional drink (Recess copycat) 대비 한국 한방 헤리티지 + AVO 모던 정체성. Wellness shot (Concept 01)보다 daily, sustained ritual.</dd>
             </dl>
           </div>
 
           <div class="concept">
             <div class="concept-header">
               <span class="concept-badge">Concept 04</span>
-              <h3>AVO Premium Tea Sticks · 한방차 분말 스틱</h3>
-              <div class="ko-name">보이차 · 한방차 portable 분말 스틱</div>
+              <h3>AVO Premium Liposomal · 리포소말 비타민 라인 (Tier 3)</h3>
+              <div class="ko-name">고흡수 리포소말 비타민 C · 글루타치온 · 마그네슘 라인</div>
             </div>
             <dl class="concept-frame">
-              <dt>US Precedent</dt><dd><strong>Pique Tea</strong> (premium tea crystals, Whole Foods national). <strong>Cusa Tea</strong>. Premium portable tea $1-3 per stick.</dd>
-              <dt>미국에서 된 이유</dt><dd>Tea drinkers convert at high LTV. Premium positioning ($30-50 per box of 14). Portable convenience without sacrificing quality.</dd>
-              <dt>한국 적용</dt><dd>한국 차 시장은 mass (오설록, 동서식품)와 prestige (수입 보이차) 사이가 비어 있다. 한방차 + 보이차 portable stick AVO 라인.</dd>
-              <dt>디자인 방향</dt><dd>한지 + 갈색 + 골드. Heritage typography. Premium gift-quality box.</dd>
-              <dt>채널</dt><dd>마켓컬리. 자사몰. 백화점 ladder. 미국 진출 후 Whole Foods.</dd>
-              <dt>차별점</dt><dd>한국 한방차 정통성을 modern stick format으로. 미국 Pique Tea보다 깊은 헤리티지.</dd>
+              <dt>US Precedent</dt><dd><strong>Cymbiotika</strong> ($100M+ revenue reported, premium liposomal). <strong>Quicksilver Scientific</strong>. <strong>Pure Encapsulations</strong>. Premium supplement segment $40-90 per bottle.</dd>
+              <dt>미국에서 된 이유</dt><dd>Bioavailability story (liposomal absorption 5-10x higher than capsule). Premium pricing justified by science. Educational marketing converts skeptics into subscribers.</dd>
+              <dt>한국 적용</dt><dd>한국 리포소말 supplement 시장은 거의 비어 있다 (일부 수입품만). AVO 자체 개발 리포소말 라인이 카테고리 owner가 될 수 있다. <strong>단, cold-start risk + consumer education burden 높아 Tier 3 launch.</strong> Concept 01-03이 brand authority 쌓은 후 진입.</dd>
+              <dt>디자인 방향</dt><dd>병원 quality clinical typography + 한방 헤리티지 mark. Premium glass dropper bottle. Educational packaging (흡수율 비교 graphs).</dd>
+              <dt>채널</dt><dd>자사몰 only (premium positioning 보호). 마켓컬리. 약사 추천 채널.</dd>
+              <dt>차별점</dt><dd>한국 자체 R&D 리포소말 + 다움 헤리티지 = Cymbiotika가 갖지 못한 동양 의학 기반 premium science. 다른 AVO concept이 brand authority 만든 후 launch.</dd>
             </dl>
           </div>
         </div>
@@ -1295,14 +1288,14 @@
       <section class="section" id="sequencing">
         <div class="section-eyebrow"><span class="num">07</span><span>Sequencing</span><span class="ko">우선순위</span></div>
         <h2>Sequencing</h2>
-        <p style="font-size: 14px; color: var(--label-primary); padding: 0 12px; margin-bottom: 14px; line-height: 1.55; max-width: 760px;">Launching all 17 concepts at once would dilute every brand. The realistic move is to pick three or four concepts to push first, validate the playbook, and let the others follow as the foundation builds.</p>
+        <p style="font-size: 14px; color: var(--label-primary); padding: 0 12px; margin-bottom: 14px; line-height: 1.55; max-width: 760px;">Launching all 15 concepts at once would dilute every brand. The realistic move is to pick three concepts to push first, validate the playbook, and let the others follow as the foundation builds. Each tier was reordered after a brand-fit audit (Apr 27, 2026): only concepts that genuinely deepen each brand's existing identity made Tier 1.</p>
 
         <div class="tier-block">
           <div class="tier-header"><span class="tier-num">Tier 01</span><span class="tier-title">Launch first · 3 concepts</span></div>
           <div class="tier-content">
-            <p><strong>Bobsnu Phyto Trio (검은 슈퍼푸드 스틱).</strong> Bobsnu has the strongest 홈쇼핑 anchor and the easiest single-stick translation of Bloom Greens into Korean retail. The 약콩 헤리티지 carries the science story without requiring new R&D narrative.</p>
-            <p><strong>Daoom Daily 생식 Stick.</strong> Daoom's 38-year heritage is the moat. Single-SKU AG1 translation that nobody else in Korea can claim. 홈쇼핑 + 마켓컬리 + 자사몰 정기배송 fit. This is the cleanest premium positioning play in the portfolio.</p>
-            <p><strong>대학두유 Drinkable Soy Probiotic.</strong> Plant-based drinkable probiotic is an underserved Korean category dominated by dairy 락토핏. 대학두유's farmer-equity story, 평창 origin, and existing soymilk credibility give it a clean entry into a category that has no current owner. 편의점 first (직장인 아침 음료), 마켓컬리 second.</p>
+            <p><strong>Bobsnu 약콩 Single-Hero Stick.</strong> 약콩 phytochemical 고함량 single-ingredient stick. Riding existing Phyto100 + 약콩샴푸 brand momentum. Single-hero positioning differentiates from multi-blend mass market (락토핏). 서울대 이기원 교수 연구 IP가 진입장벽.</p>
+            <p><strong>Daoom Daily 생식 Stick.</strong> Daoom's 38-year heritage is the moat. Single-SKU AG1 translation that nobody else in Korea can claim. 홈쇼핑 + 마켓컬리 + 자사몰 정기배송 fit. This is the cleanest brand-PMF alignment in the entire portfolio. Flagship launch.</p>
+            <p><strong>대학두유 Functional Soy RTD.</strong> Stays in soymilk core (no format jump). Single-serve protein + probiotic + fiber variants of premium soymilk. 농가 공동 소유 + 평창 origin가 매일유업/정식품 mass commodity와 분명히 구별. 편의점 (직장인 단백질 음료) + 마켓컬리.</p>
           </div>
         </div>
 
@@ -1311,15 +1304,15 @@
           <div class="tier-content">
             <p><strong>AVO Korean Wellness Shot Trio.</strong> Premium positioning, 편의점 viral, US transferable later. Wait for Tier 1 to fund and validate before launching this premium-tier risk.</p>
             <p><strong>Pheeew RTD Synbiotic Soda.</strong> Wait until Pheeew US Phase 1 launches and the brand has its first wave of authority. Korean RTD launch becomes Phase 2 amplifier.</p>
-            <p><strong>Bobsnu Hair & Inside Care.</strong> 홈쇼핑 anchor product extension. Pairs naturally with existing 약콩샴푸 line.</p>
+            <p><strong>Bobsnu Hair & Inside Care.</strong> 홈쇼핑 anchor product extension. Pairs naturally with existing 약콩샴푸 line and rides 탈모 anxiety market.</p>
           </div>
         </div>
 
         <div class="tier-block">
           <div class="tier-header"><span class="tier-num">Tier 03</span><span class="tier-title">Launch later · after relationship matures</span></div>
           <div class="tier-content">
-            <p>Daoom 한방 adaptogen, AVO Liposomal, AVO Korean Greens, AVO Tea Sticks, Pheeew Daily Stick, Pheeew Gummies, 대학두유 Functional Soy RTD, 대학두유 Soy Protein Bar, 대학두유 Barista Soy (B2B + retail), SO 7-function expansion (Sleep, Cycle, Stress, Gut, Mood, Focus, Immunity), Daoom Drinkable Meal.</p>
-            <p>None of the Tier 3 concepts are weak. They're sequenced behind Tier 1 and 2 because they require either more R&D, more channel work, or more brand prep before they can ship cleanly. The portfolio above gives us 3-5 years of pipeline if even half of these convert.</p>
+            <p>Bobsnu Phyto100 RTD, Daoom 생식 RTD, 대학두유 Barista Soy (B2B + retail), 대학두유 Heritage Flavored Soymilk RTD line, AVO 한방 Adaptogen Daily Stick, AVO Functional Drink RTD, AVO Premium Liposomal, Pheeew Daily Synbiotic Stick, Pheeew Calm & Smile Gummies.</p>
+            <p>None of the Tier 3 concepts are weak. They're sequenced behind Tier 1 and 2 because they require either more R&D, more channel work, or more brand prep before they can ship cleanly. The portfolio gives 3-5 years of pipeline if even half of these convert.</p>
           </div>
         </div>
       </section>
@@ -1590,6 +1583,22 @@
   });
 
   updateActiveSidebar();
+
+  // ---------- Bilingual language toggle ----------
+  const langToggle = document.getElementById('langToggle');
+  if (langToggle) {
+    const savedLang = localStorage.getItem('avo-lang');
+    if (savedLang === 'ko') {
+      document.body.classList.add('lang-mode-ko');
+      langToggle.textContent = 'EN';
+    }
+    langToggle.addEventListener('click', () => {
+      document.body.classList.toggle('lang-mode-ko');
+      const isKo = document.body.classList.contains('lang-mode-ko');
+      langToggle.textContent = isKo ? 'EN' : '한국어';
+      localStorage.setItem('avo-lang', isKo ? 'ko' : 'en');
+    });
+  }
 })();
 </script>
 
