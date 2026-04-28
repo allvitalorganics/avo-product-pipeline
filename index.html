@@ -250,6 +250,45 @@
     box-shadow: 0 0 0 0.5px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.15);
   }
 
+  /* Concept image strip (visual references at top of each concept) */
+  .concept-images {
+    margin-top: 6px;
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed var(--separator);
+  }
+  .concept-images-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--tint);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .concept-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px;
+  }
+  .concept-image {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--separator);
+    background: var(--bg-tertiary);
+    aspect-ratio: 4 / 3;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .concept-image:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--elev-2);
+  }
+  .concept-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
   /* Reference visuals grid */
   .ref-grid {
     margin-top: 18px;
@@ -1108,6 +1147,14 @@
               <h3>약콩 Hair & Inside Care · 통합 모발 영양제</h3>
               <div class="ko-name">Bobsnu Hair Vitality Capsule + Drink Hybrid</div>
             </div>
+            <div class="concept-images">
+              <div class="concept-images-title">Visual References · 시각 레퍼런스</div>
+              <div class="concept-images-grid">
+                <div class="concept-image"><img src="img/hair-supplement-1.webp" alt="Hair supplement reference 1" loading="lazy"></div>
+                <div class="concept-image"><img src="img/hair-supplement-2.jpg" alt="Hair supplement reference 2" loading="lazy"></div>
+                <div class="concept-image"><img src="img/hair-supplement-3.jpg" alt="Hair supplement reference 3" loading="lazy"></div>
+              </div>
+            </div>
             <dl class="concept-frame">
               <dt>US Precedent</dt><dd><span class="lang-en"><strong>Nutrafol</strong> (~$200M+ revenue, Unilever-acquired 2022 majority stake). <strong>Vegamour</strong>. <strong>Olly Hair Boost</strong>. Hair-and-skin supplements have grown into a $1B+ US category, driven partially by GLP-1 hair loss adjacent demand.</span><span class="lang-ko"><strong>Nutrafol</strong>(매출 $200M+, 2022년 Unilever 다수 지분 인수). <strong>Vegamour</strong>. <strong>Olly Hair Boost</strong>. 헤어·피부 보충제는 미국에서 $1B+ 카테고리로 성장, GLP-1 탈모 인접 수요가 일부 견인.</span></dd>
               <dt>미국에서 된 이유</dt><dd><span class="lang-en">Hair loss anxiety crosses age, gender, income. Medical-grade ingredients (saw palmetto, marine collagen, biotin) packaged as daily wellness rather than treatment. Subscription-native, condition-specific.</span><span class="lang-ko">탈모 anxiety는 연령·성별·소득을 넘는다. Medical-grade 성분(saw palmetto, marine collagen, biotin)을 치료가 아닌 데일리 웰니스로 패키징. 정기배송 native, 컨디션별 specific.</span></dd>
@@ -1134,6 +1181,16 @@
               <span class="concept-badge">Concept 02</span>
               <h3>Bobsnu Phyto100 Complete · 약콩 phyto + 그린스 + 단백질 + 비타민/미네랄 완전식</h3>
               <div class="ko-name">Phyto100 IP + complete meal powder · 한 끼 완전식 진화</div>
+            </div>
+            <div class="concept-images">
+              <div class="concept-images-title">Visual References · 시각 레퍼런스</div>
+              <div class="concept-images-grid">
+                <div class="concept-image"><img src="img/meal-replacement-powder-1.jpg" alt="Complete meal powder 1" loading="lazy"></div>
+                <div class="concept-image"><img src="img/meal-replacement-powder-2.jpg" alt="Complete meal powder 2" loading="lazy"></div>
+                <div class="concept-image"><img src="img/meal-replacement-powder-3.jpg" alt="Complete meal powder 3" loading="lazy"></div>
+                <div class="concept-image"><img src="img/meal-replacement-powder-4.jpg" alt="Complete meal powder 4" loading="lazy"></div>
+                <div class="concept-image"><img src="img/reference-general.jpg" alt="General reference" loading="lazy"></div>
+              </div>
             </div>
             <dl class="concept-frame">
               <dt>US Precedent</dt><dd><span class="lang-en"><strong>Huel Black Edition</strong> (<a href="https://uk.huel.com/" target="_blank">huel.com</a>, premium complete meal · 40g protein · 27 vitamins & minerals · low-carb). <strong>Huel Essential</strong> (<a href="https://uk.huel.com/products/huel-essential" target="_blank">value tier</a>). <strong>AG1</strong> (<a href="https://drinkag1.com/" target="_blank">drinkag1.com</a>, $1.2B valuation, daily greens single-SKU). <strong>Ka'Chava</strong> (<a href="https://www.kachava.com/" target="_blank">kachava.com</a>, plant superfood meal). <strong>IM8 Health</strong> (<a href="https://im8health.com/" target="_blank">im8health.com</a>). <strong>Bulk.com Complete Food Shake</strong> (<a href="https://www.bulk.com/uk/products/1-complete-food-shake/bpfs-one" target="_blank">bulk.com</a>). Complete-meal powder is a $1B+ category in US/UK.</span><span class="lang-ko"><strong>Huel Black Edition</strong>(프리미엄 완전식 · 단백질 40g · 27종 비타민/미네랄 · 저탄수). <strong>Huel Essential</strong>(가성비 티어). <strong>AG1</strong>($1.2B 밸류, 데일리 그린스 단일 SKU). <strong>Ka'Chava</strong>(식물성 슈퍼푸드 한 끼). <strong>IM8 Health</strong>. <strong>Bulk.com Complete Food Shake</strong>. 완전식 powder는 미국/UK에서 $1B+ 카테고리.</span></dd>
@@ -1175,6 +1232,16 @@
               <h3>Daoom Daily 생식 · 38년 헤리티지 단일 스틱</h3>
               <div class="ko-name">Daoom Modern 생식 Daily Stick · AG1의 한국 답</div>
             </div>
+            <div class="concept-images">
+              <div class="concept-images-title">Visual References · 시각 레퍼런스</div>
+              <div class="concept-images-grid">
+                <div class="concept-image"><img src="img/superfood-powder-1.jpg" alt="Superfood powder reference 1" loading="lazy"></div>
+                <div class="concept-image"><img src="img/superfood-powder-2.jpg" alt="Superfood powder reference 2" loading="lazy"></div>
+                <div class="concept-image"><img src="img/superfood-powder-3.jpg" alt="Superfood powder reference 3" loading="lazy"></div>
+                <div class="concept-image"><img src="img/superfood-powder-4.jpg" alt="Superfood powder reference 4" loading="lazy"></div>
+                <div class="concept-image"><img src="img/superfood-powder-5.jpg" alt="Superfood powder reference 5" loading="lazy"></div>
+              </div>
+            </div>
             <dl class="concept-frame">
               <dt>US Precedent</dt><dd><span class="lang-en"><strong>AG1</strong> ($1.2B valuation, 2024 Forbes). Single-SKU daily greens, premium subscription. The AG1 playbook: one product, one promise, premium price, lifetime customer.</span><span class="lang-ko"><strong>AG1</strong>(2024년 Forbes 기준 $1.2B 밸류). 단일 SKU 데일리 그린스, 프리미엄 정기배송. AG1 플레이북: 하나의 제품, 하나의 약속, 프리미엄 가격, 평생 고객.</span></dd>
               <dt>미국에서 된 이유</dt><dd><span class="lang-en">단일 SKU + premium positioning removes choice fatigue. "If I do one thing for my health, this is it." Subscription locks in lifetime value at high CAC.</span><span class="lang-ko">단일 SKU + 프리미엄 포지셔닝이 선택 피로를 제거. "내 건강을 위해 하나만 한다면 이것"이라는 인식. 정기배송이 높은 CAC에서도 라이프타임 밸류를 락인한다.</span></dd>
@@ -1201,6 +1268,13 @@
               <span class="concept-badge">Concept 02</span>
               <h3>Daoom 생식 RTD · 마시는 생식</h3>
               <div class="ko-name">38년 생식의 마실 수 있는 진화 · 일상 ritual format</div>
+            </div>
+            <div class="concept-images">
+              <div class="concept-images-title">Visual References · 시각 레퍼런스</div>
+              <div class="concept-images-grid">
+                <div class="concept-image"><img src="img/meal-replacement-rtd.jpg" alt="Meal replacement RTD reference" loading="lazy"></div>
+                <div class="concept-image"><img src="img/greens-rtd.jpg" alt="Greens RTD reference" loading="lazy"></div>
+              </div>
             </div>
             <dl class="concept-frame">
               <dt>US Precedent</dt><dd><span class="lang-en"><strong>Huel RTD</strong> (~$200M+ revenue 2024 reported). <strong>Soylent</strong>. <strong>Kachava</strong>. Drinkable nutrition category. <em>Note: AVO positions this NOT as meal-replacement (Huel/Soylent angle) but as 생식's drinkable evolution — different mental category, premium not utilitarian.</em></span><span class="lang-ko"><strong>Huel RTD</strong>(2024년 보고 매출 $200M+). <strong>Soylent</strong>. <strong>Kachava</strong>. 마실 수 있는 영양 카테고리. <em>참고: AVO는 이 컨셉을 식사 대용(Huel/Soylent 각도)이 아닌 생식의 마실 수 있는 진화로 포지셔닝. 다른 소비자 인식 카테고리, 프리미엄이며 실용주의가 아니다.</em></span></dd>
@@ -1240,6 +1314,13 @@
               <span class="concept-badge">Concept 01</span>
               <h3>대학두유 Flavored Soymilk RTD · 두유 맛 라인업</h3>
               <div class="ko-name">카페 (말차·차이·밀크티·커피·바닐라) + 헤리티지 곡물 (흑임자·호두·검은쌀·단호박) 통합 라인</div>
+            </div>
+            <div class="concept-images">
+              <div class="concept-images-title">Visual References · 시각 레퍼런스</div>
+              <div class="concept-images-grid">
+                <div class="concept-image"><img src="img/flavored-soymilk-1.jpg" alt="Flavored soymilk reference 1" loading="lazy"></div>
+                <div class="concept-image"><img src="img/flavored-soymilk-2.jpg" alt="Flavored soymilk reference 2" loading="lazy"></div>
+              </div>
             </div>
             <dl class="concept-frame">
               <dt>US Precedent</dt><dd><span class="lang-en"><strong>Oatly</strong> Chocolate / Vanilla / Latte (peak $10B valuation). <strong>Califia Farms</strong> Mocha / Vanilla / Cold Brew. <strong>Silk variants</strong>. <strong>Plenish Drinks</strong>. <strong>Uchi Matcha</strong>, <strong>Tsuki Matcha</strong> (premium matcha lattes). <strong>Newmix Coffee Matcha Latte</strong>. Flavor extension is the cleanest SKU multiplier in the plant-milk category — drives shelf variety, repeat purchase, and brand expansion without R&D risk.</span><span class="lang-ko"><strong>Oatly</strong> 초콜릿 / 바닐라 / 라테(피크 밸류 $10B). <strong>Califia Farms</strong> 모카 / 바닐라 / 콜드브루. <strong>Silk 변형 라인</strong>. <strong>Plenish Drinks</strong>. <strong>Uchi Matcha</strong>, <strong>Tsuki Matcha</strong>(프리미엄 말차 라테). <strong>Newmix Coffee Matcha Latte</strong>. 맛 확장은 식물성 우유 카테고리에서 가장 깨끗한 SKU 곱셈기 — R&D 리스크 없이 매대 다양성, 반복 구매, 브랜드 확장을 견인.</span></dd>
@@ -1312,6 +1393,16 @@
               <h3>AVO Korean Wellness Shot Trio · 한방 어댑토겐 샷 3종</h3>
               <div class="ko-name">Mental Clarity · Immunity · Digestion 3-shot 라인업</div>
             </div>
+            <div class="concept-images">
+              <div class="concept-images-title">Visual References · 시각 레퍼런스</div>
+              <div class="concept-images-grid">
+                <div class="concept-image"><img src="img/adaptogen-shot-1.jpg" alt="Adaptogen shot reference 1" loading="lazy"></div>
+                <div class="concept-image"><img src="img/adaptogen-shot-2.jpg" alt="Adaptogen shot reference 2" loading="lazy"></div>
+                <div class="concept-image"><img src="img/adaptogen-shot-3.jpg" alt="Adaptogen shot reference 3" loading="lazy"></div>
+                <div class="concept-image"><img src="img/adaptogen-shot-4.jpg" alt="Adaptogen shot reference 4" loading="lazy"></div>
+                <div class="concept-image"><img src="img/adaptogen-shot-5.jpg" alt="Adaptogen shot reference 5" loading="lazy"></div>
+              </div>
+            </div>
             <dl class="concept-frame">
               <dt>US Precedent</dt><dd><span class="lang-en"><strong>Magic Mind</strong> (~$20M+ revenue 2024). <strong>Suja Shots</strong>. <strong>So Good So You</strong>. <strong>KOR</strong>. <strong>Vive Organic</strong>. Wellness shot category $1B+ in US per industry reports.</span><span class="lang-ko"><strong>Magic Mind</strong>(2024년 매출 $20M+). <strong>Suja Shots</strong>. <strong>So Good So You</strong>. <strong>KOR</strong>. <strong>Vive Organic</strong>. 업계 보고 기준 미국 wellness shot 카테고리 $1B+.</span></dd>
               <dt>미국에서 된 이유</dt><dd><span class="lang-en">Single-serve, single-benefit, premium pricing ($3-9 per shot). Convenience-store-ready. "Functional moment in a bottle." Magic Mind specifically owned mental clarity through L-theanine + matcha + nootropic.</span><span class="lang-ko">단일 서빙, 단일 베네핏, 프리미엄 가격(샷당 $3-9). 편의점 친화. "병 속의 기능성 순간." Magic Mind는 L-테아닌 + 말차 + 누트로픽을 통해 멘탈 클래리티 카테고리를 점유.</span></dd>
@@ -1341,6 +1432,15 @@
               <span class="concept-badge">Concept 02</span>
               <h3>AVO Functional Drink RTD · 한방 데일리 functional 음료</h3>
               <div class="ko-name">한방 + 어댑토겐 + 식물성 daily functional RTD</div>
+            </div>
+            <div class="concept-images">
+              <div class="concept-images-title">Visual References · 시각 레퍼런스</div>
+              <div class="concept-images-grid">
+                <div class="concept-image"><img src="img/adaptogen-drink-1.jpg" alt="Adaptogen drink reference 1" loading="lazy"></div>
+                <div class="concept-image"><img src="img/adaptogen-drink-2.jpg" alt="Adaptogen drink reference 2" loading="lazy"></div>
+                <div class="concept-image"><img src="img/superfood-drink-1.jpg" alt="Superfood drink reference 1" loading="lazy"></div>
+                <div class="concept-image"><img src="img/superfood-drink-2.jpg" alt="Superfood drink reference 2" loading="lazy"></div>
+              </div>
             </div>
             <dl class="concept-frame">
               <dt>US Precedent</dt><dd><span class="lang-en"><strong>Recess</strong>, <strong>Cadence</strong> (<a href="https://usecadence.com/" target="_blank">usecadence.com</a>), <strong>Rebbl</strong>, <strong>Drink Tru</strong> (<a href="https://drinktru.com/" target="_blank">drinktru.com</a>), <strong>Liquid Plus</strong> (<a href="https://www.drinkliquidplus.com/" target="_blank">drinkliquidplus.com</a>). Premium functional drink category — subtler than wellness shot, more sustained than coffee or energy drink.</span><span class="lang-ko"><strong>Recess</strong>, <strong>Cadence</strong>, <strong>Rebbl</strong>, <strong>Drink Tru</strong>, <strong>Liquid Plus</strong>. 프리미엄 기능성 드링크 카테고리 — wellness shot보다 은은하고, 커피나 에너지 드링크보다 지속적.</span></dd>
